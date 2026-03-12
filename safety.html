@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety - Rapido</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(252, 194, 27, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(252, 194, 27, 0.8); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCC21B;
+            border-radius: 5px;
+        }
+        
+        /* Navigation Styles */
+        .nav-transparent {
+            background: transparent;
+        }
+        .nav-solid {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 1023px) {
+            .mobile-nav-bg {
+                background: #ffffff !important;
+                border-bottom: 2px solid #FCC21B;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Safety Card Hover Effects */
+        .safety-card {
+            transition: all 0.4s ease;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .safety-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(252, 194, 27, 0.25);
+            border-color: rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Feature Card */
+        .feature-card {
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(252, 194, 27, 0.3);
+        }
+        
+        /* SOS Button Animation */
+        .sos-pulse {
+            position: relative;
+        }
+        
+        .sos-pulse::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.4);
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        /* Timeline Styles */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #FCC21B, #e5b100);
+            border-radius: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 30px;
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #FCC21B;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #FCC21B;
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+        
+        /* Navigation Link Hover */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FCC21B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown */
+        .dropdown-menu {
+            transform-origin: top;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dropdown-menu.hidden {
+            transform: scaleY(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .dropdown-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -10px rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Hero Pattern */
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(252, 194, 27, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(252, 194, 27, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Checkmark Animation */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #FCC21B;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #FCC21B 0%, #e5b100 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Safety Badge */
+        .safety-badge {
+            background: linear-gradient(135deg, #FCC21B 0%, #ffd700 100%);
+            box-shadow: 0 10px 30px -10px rgba(252, 194, 27, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-white overflow-x-hidden">
+
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <img src="logo.webp" 
+                                 alt="Rapido Logo" 
+                                 class="w-13 h-13 object-contain">
+                        </div>
+                        <span class="text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">Stackly</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1" data-aos="fade-down" data-aos-duration="800" data-aos-delay="200">
+                    <!-- Home Dropdown -->
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('home-dropdown')">
+                            Home
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="home-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 1</span>
+                            </a>
+                            <a href="home.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 2</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="service.html" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-4 py-2">Services</a>
+                    
+                    <!-- About Dropdown -->
+                    <div class="relative group px-2">
+                    <a href="About.html">  <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
+                            About Us
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>  
+                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Careers</span>
+                            </a>
+                        </div> -->
+                    </div>
+                    
+                    <!-- Safety Dropdown -->
+                    <div class="relative group px-2">
+                      <a href="safety.html">  <button class="nav-link text-[#FCC21B] font-bold flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
+                            Safety
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors bg-[#FCC21B]/5">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Safety Features</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Insurance</span>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Desktop CTA -->
+                  
+                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
+                                    <a href="contact.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Contact</button></a> 
+
+                <a href="login.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a> 
+                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
+                       Dashboard
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                   <a href="login.html"><button class="text-gray-800 font-medium text-sm">Login</button></a> 
+                    <button onclick="toggleMobileMenu()" class="bg-[#FCC21B] text-black p-2.5 rounded-lg hover:bg-[#e5b100] transition-colors shadow-md">
+                        <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="flex flex-col p-6 space-y-1">
+                <!-- Home Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
+                            Home
+                        </span>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
+                    </button>
+                    <div id="mobile-home" class="hidden pl-12 space-y-1 py-2">
+                        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 1
+                        </a>
+                        <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 2
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <a href="service.html" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
+                    <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
+                    Services
+                </a>
+                
+                <!-- About Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="About.html">  <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i>
+                            About Us
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-about-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-about" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="info" class="w-5 h-5"></i> About Us
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i> Careers
+                        </a>
+                    </div> -->
+                </div>
+                
+                <!-- Safety Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                 <a href="safety.html">   <button onclick="toggleMobileDropdown('mobile-safety')" class="w-full text-left text-lg font-bold text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <!-- <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i> -->
+                            Safety
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-safety-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-safety" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-[#FCC21B] py-3 font-bold">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i> Safety Features
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield" class="w-5 h-5"></i> Insurance
+                        </a>
+                    </div> -->
+                </div>
+
+                <!-- CTA -->
+                 <div class="pt-6 space-y-4">
+                    <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-6 h-6"></i>
+                       Contact
+                    </a>
+                </div>
+                <div class="pt-6 space-y-4">
+                    <a href="dash.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-6 h-6"></i>
+                        Dashboard
+                    </a>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="pt-6 mt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-500 mb-2">Emergency Safety Helpline</p>
+                    <a href="tel:080-XXXXXXX" class="text-lg font-bold text-[#FCC21B] flex items-center gap-2">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        080-XXXXXXX
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gray-50 hero-pattern overflow-hidden">
+        <div class="absolute top-20 right-10 w-72 h-72 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    YOUR SECURITY IS OUR PRIORITY
+                </span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight" data-aos="zoom-in" data-aos-duration="1000">
+                    Safety <span class="text-[#FCC21B]">First</span>,<br>Always
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    We've built the most comprehensive, system-led safety ecosystem for bike taxis in India. From verification to real-time monitoring, every ride is protected by multiple layers of security.
+                </p>
+                
+                <!-- Safety Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-3xl font-bold text-[#FCC21B] mb-1">100%</div>
+                        <div class="text-sm text-gray-600">Verified Captains</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-3xl font-bold text-[#FCC21B] mb-1">24/7</div>
+                        <div class="text-sm text-gray-600">Safety Support</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-3xl font-bold text-[#FCC21B] mb-1">Acko</div>
+                        <div class="text-sm text-gray-600">Ride Insurance</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-3xl font-bold text-[#FCC21B] mb-1">SOS</div>
+                        <div class="text-sm text-gray-600">Emergency Button</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Captain Verification Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4">
+                        CAPTAIN VERIFICATION
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        5-Layer <span class="text-[#FCC21B]">Verification</span><br>Process
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Every captain undergoes rigorous screening before they can accept rides. We leave no stone unturned when it comes to your safety.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#FCC21B]/5 transition-colors">
+                            <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="id-card" class="w-6 h-6 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Aadhaar-Based Identity Verification</h3>
+                                <p class="text-sm text-gray-600">Government-issued ID verification through official portals</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#FCC21B]/5 transition-colors">
+                            <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Police Background Check</h3>
+                                <p class="text-sm text-gray-600">Comprehensive criminal record verification with annual screenings</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#FCC21B]/5 transition-colors">
+                            <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Address Verification</h3>
+                                <p class="text-sm text-gray-600">Physical address verification to ensure traceability</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#FCC21B]/5 transition-colors">
+                            <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="file-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Vehicle Documentation</h3>
+                                <p class="text-sm text-gray-600">Valid license, registration, insurance, and pollution certificate verification</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-[#FCC21B]/5 transition-colors">
+                            <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="heart-pulse" class="w-6 h-6 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Medical Examination</h3>
+                                <p class="text-sm text-gray-600">Complete health check-up including eye examination (company-sponsored)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                    <div class="relative bg-white rounded-2xl p-8 shadow-2xl border border-gray-100">
+                        <div class="safety-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-black font-bold mb-6">
+                            <i data-lucide="shield" class="w-5 h-5"></i>
+                            Verified Captain Profile
+                        </div>
+                        
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
+                                <i data-lucide="user" class="w-10 h-10 text-gray-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl text-gray-900">Ramesh Kumar</h3>
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <i data-lucide="star" class="w-4 h-4 text-[#FCC21B] fill-current"></i>
+                                    <span>4.8 Rating</span>
+                                    <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
+                                    <span>2,450 Rides</span>
+                                </div>
+                                <div class="flex gap-2 mt-2">
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-semibold">Verified</span>
+                                    <span class="px-2 py-1 bg-[#FCC21B]/10 text-[#FCC21B] text-xs rounded-full font-semibold">Gold Captain</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 border-t pt-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">License Verified</span>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Background Check</span>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Vehicle Inspected</span>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Safety Training</span>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Medical Clearance</span>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="bike" class="w-8 h-8 text-[#FCC21B]"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">KA-01-AB-1234</p>
+                                    <p class="text-sm text-gray-500">Honda Activa 125</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- In-App Safety Features -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    IN-APP PROTECTION
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Real-Time Safety Features
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Advanced technology working 24/7 to ensure your ride is safe from start to finish.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- SOS Button -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-2xl flex items-center justify-center sos-pulse">
+                        <i data-lucide="alert-circle" class="w-8 h-8 text-red-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">SOS Emergency Button</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">One-tap emergency alert activated once ride is accepted. Directly connects to our 24/7 safety response team and emergency services.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-red-600 font-semibold">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        < 30 sec response time
+                    </div>
+                </div>
+                
+                <!-- Live Tracking -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">Live GPS Tracking</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Real-time ride monitoring with route deviation alerts. Share your live trip status with family and friends instantly.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-[#FCC21B] font-semibold">
+                        <i data-lucide="activity" class="w-4 h-4"></i>
+                        End-to-end encrypted
+                    </div>
+                </div>
+                
+                <!-- Night Safety -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-indigo-100 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="moon" class="w-8 h-8 text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">Night Rides Check</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">For rides between 10 PM - 6 AM, our safety team calls to verify you've reached safely. Automatic check-in system.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-indigo-600 font-semibold">
+                        <i data-lucide="phone-call" class="w-4 h-4"></i>
+                        Post-ride verification call
+                    </div>
+                </div>
+                
+                <!-- Route Deviation -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="navigation" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">Route Deviation Alerts</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">AI-powered system detects unusual route changes and immediately notifies you with options to take action.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-orange-600 font-semibold">
+                        <i data-lucide="cpu" class="w-4 h-4"></i>
+                        AI-powered monitoring
+                    </div>
+                </div>
+                
+                <!-- Digital Records -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="database" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">Digital Ride Records</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Every ride is digitally logged with GPS tracking, time stamps, and route details. Full auditability for investigation.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-green-600 font-semibold">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        100% traceable
+                    </div>
+                </div>
+                
+                <!-- Feedback System -->
+                <div class="safety-card rounded-2xl p-6 border border-gray-200" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2 text-center">Post-Ride Feedback</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Mandatory safety feedback prompts. Verified complaints lead to immediate captain deactivation and investigation.</p>
+                    <div class="flex items-center justify-center gap-2 text-xs text-purple-600 font-semibold">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        Zero-tolerance policy
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Women Safety Section -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#FCC21B]/5 to-transparent"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2 order-2 lg:order-1" data-aos="fade-right">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-pink-200 to-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                        <div class="relative bg-white rounded-2xl p-8 shadow-2xl border border-gray-100">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="users" class="w-6 h-6 text-pink-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Bike Pink</h3>
+                                    <p class="text-sm text-gray-500">Women-only rides</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-xl">
+                                    <i data-lucide="user-check" class="w-5 h-5 text-pink-600"></i>
+                                    <span class="text-sm font-medium text-gray-700">Female captains available</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-xl">
+                                    <i data-lucide="shield" class="w-5 h-5 text-pink-600"></i>
+                                    <span class="text-sm font-medium text-gray-700">Enhanced privacy features</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-xl">
+                                    <i data-lucide="phone" class="w-5 h-5 text-pink-600"></i>
+                                    <span class="text-sm font-medium text-gray-700">Priority safety support</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <p class="text-xs text-gray-500 mb-2">Safety Tip</p>
+                                <p class="text-sm text-gray-700 font-medium">"Always verify the captain's photo and vehicle details before starting your ride."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 order-1 lg:order-2" data-aos="fade-left">
+                    <span class="inline-block px-4 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-semibold mb-4">
+                        WOMEN'S SAFETY
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Built for <span class="text-[#FCC21B]">Women</span>,<br>Designed for <span class="text-pink-500">Safety</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        We understand the unique safety concerns women face while commuting. That's why we've created specialized features to ensure every woman feels secure on every ride.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="user" class="w-5 h-5 text-pink-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Verified Captain Profiles</h3>
+                                <p class="text-gray-600 text-sm">Complete captain information including photo, rating, and ride history displayed before booking.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="share-2" class="w-5 h-5 text-pink-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Share Trip Status</h3>
+                                <p class="text-gray-600 text-sm">One-click sharing of live location and trip details with trusted contacts via WhatsApp/SMS.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="headphones" class="w-5 h-5 text-pink-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">24/7 Women's Helpline</h3>
+                                <p class="text-gray-600 text-sm">Dedicated support team trained to handle women-specific safety concerns with priority response.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="eye" class="w-5 h-5 text-pink-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1">Respectful Conduct Training</h3>
+                                <p class="text-gray-600 text-sm">All captains undergo mandatory training on professional conduct and respectful behavior with women passengers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insurance Section -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    RIDE INSURANCE
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Acko-Powered Protection
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Every Rapido ride comes with complimentary insurance coverage for both riders and captains.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-10 h-10 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-xl mb-3">Rider Insurance</h3>
+                    <ul class="text-left space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Personal accident coverage
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Medical expense reimbursement
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Disability coverage
+                        </li>
+                    </ul>
+                    <div class="text-3xl font-bold text-[#FCC21B]">₹5 Lakh</div>
+                    <p class="text-xs text-gray-500 mt-1">Coverage per ride</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 text-center relative transform scale-105 shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-[#FCC21B] text-black px-4 py-1 rounded-full text-xs font-bold">RECOMMENDED</span>
+                    </div>
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[#FCC21B]/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="shield" class="w-10 h-10 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-xl mb-3">Comprehensive</h3>
+                    <ul class="text-left space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Both rider & captain covered
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Third-party liability
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            24/7 claim support
+                        </li>
+                    </ul>
+                    <div class="text-3xl font-bold text-[#FCC21B]">Included</div>
+                    <p class="text-xs text-gray-500 mt-1">In every ride</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="bike" class="w-10 h-10 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-xl mb-3">Captain Insurance</h3>
+                    <ul class="text-left space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Accident coverage on duty
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Income protection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Hospitalization benefits
+                        </li>
+                    </ul>
+                    <div class="text-3xl font-bold text-[#FCC21B]">₹5 Lakh</div>
+                    <p class="text-xs text-gray-500 mt-1">Coverage per ride</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
+                <p class="text-gray-600 mb-4">Powered by</p>
+                <div class="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md border border-gray-100">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                    <span class="font-bold text-gray-900">Acko General Insurance</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Training Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4">
+                        CAPTAIN TRAINING
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Mandatory <span class="text-[#FCC21B]">Safety</span><br>Education
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Before a captain can accept their first ride, they must complete our comprehensive 30-hour induction program. Safety isn't optional—it's mandatory.
+                    </p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="book-open" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Traffic Rules</h4>
+                                <p class="text-xs text-gray-500">Comprehensive road safety education</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="heart" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">First Aid</h4>
+                                <p class="text-xs text-gray-500">Basic emergency response training</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="users" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Professional Conduct</h4>
+                                <p class="text-xs text-gray-500">Behavioral standards & etiquette</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Emergency Response</h4>
+                                <p class="text-xs text-gray-500">Crisis management protocols</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="user-x" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Zero Tolerance</h4>
+                                <p class="text-xs text-gray-500">Strict anti-harassment policies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-[#FCC21B]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="refresh-cw" class="w-4 h-4 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Refresher Courses</h4>
+                                <p class="text-xs text-gray-500">Ongoing mandatory training</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                    <div class="relative bg-white rounded-2xl p-8 shadow-2xl border border-gray-100">
+                        <h3 class="font-bold text-2xl text-gray-900 mb-6">Training Modules</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Induction Training</p>
+                                        <p class="text-xs text-gray-500">30 hours mandatory</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-600 font-bold text-sm">Required</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="shield" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Safety Refresher</p>
+                                        <p class="text-xs text-gray-500">Quarterly updates</p>
+                                    </div>
+                                </div>
+                                <span class="text-blue-600 font-bold text-sm">Ongoing</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="award" class="w-5 h-5 text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Certification</p>
+                                        <p class="text-xs text-gray-500">Valid for 1 year</p>
+                                    </div>
+                                </div>
+                                <span class="text-purple-600 font-bold text-sm">Verified</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="x-circle" class="w-5 h-5 text-orange-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Non-Compliance</p>
+                                        <p class="text-xs text-gray-500">Immediate deactivation</p>
+                                    </div>
+                                </div>
+                                <span class="text-orange-600 font-bold text-sm">Strict</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-[#FCC21B]/10 rounded-xl border border-[#FCC21B]/20">
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B] mt-0.5"></i>
+                                <p class="text-sm text-gray-700">Captains must complete refresher training annually. Spot checks are conducted regularly to ensure compliance with safety standards.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Timeline -->
+    <section class="py-24 bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                SAFETY EVOLUTION
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Our Safety Journey
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div class="timeline-line"></div>
+                
+                <!-- 2015 -->
+                <div class="relative mb-12 md:mb-0" data-aos="fade-up" data-aos-delay="0">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2015</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Basic Verification</h3>
+                            <p class="text-gray-600 text-sm">Started with fundamental ID verification and driving license checks for all captains.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2018 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2018</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Background Checks</h3>
+                            <p class="text-gray-600 text-sm">Introduced comprehensive police verification and criminal record screening.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2020 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2020</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">SOS Feature</h3>
+                            <p class="text-gray-600 text-sm">Launched emergency SOS button with 24/7 safety response team integration.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2022 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2022</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">AI Monitoring</h3>
+                            <p class="text-gray-600 text-sm">Implemented real-time route deviation detection and behavioral pattern analysis.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2023 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="400">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2023</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Night Safety Check</h3>
+                            <p class="text-gray-600 text-sm">Introduced mandatory post-ride safety verification calls for night rides (10 PM - 6 AM).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2024 -->
+                <div class="relative md:mt-12" data-aos="fade-up" data-aos-delay="500">
+                    <div class="timeline-dot top-0" style="box-shadow: 0 0 0 4px #FCC21B, 0 0 20px rgba(252,194,27,0.6);"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="bg-[#FCC21B] rounded-2xl p-6 shadow-lg border border-[#FCC21B]">
+                            <span class="inline-block px-3 py-1 bg-black text-white text-xs font-bold rounded-full mb-2">2024</span>
+                            <h3 class="font-bold text-black text-lg mb-2">System-Led Safety</h3>
+                            <p class="text-black/80 text-sm">Comprehensive prevention-first safety ecosystem with predictive risk monitoring and zero-tolerance enforcement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Tips Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    RIDE SAFE
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Safety Tips for Riders
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="user-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Verify Captain</h3>
+                    <p class="text-sm text-gray-600">Always check the captain's photo, name, and vehicle details match the app before starting the ride.</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="hard-hat" class="w-6 h-6 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Wear Helmet</h3>
+                    <p class="text-sm text-gray-600">Always wear the helmet provided by the captain. It's mandatory and for your protection.</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="share-2" class="w-6 h-6 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Share Trip</h3>
+                    <p class="text-sm text-gray-600">Share your live trip status with family or friends, especially for night rides or new routes.</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-[#FCC21B]/10 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="alert-circle" class="w-6 h-6 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Stay Alert</h3>
+                    <p class="text-sm text-gray-600">Keep your phone charged and accessible. Use the SOS button if you feel unsafe at any point.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-[#FCC21B] relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('homeimg1.web')] opacity-10"></div>
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-6" data-aos="fade-up">
+                Your Safety is Non-Negotiable
+            </h2>
+            <p class="text-black/70 mb-10 max-w-2xl mx-auto text-lg" data-aos="fade-up" data-aos-delay="100">
+                Experience the safest bike taxi service in India. Download the app and ride with confidence knowing you're protected by the most advanced safety features.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="#" class="btn-primary bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-900 flex items-center gap-2">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    Download App
+                </a>
+                <a href="#" class="btn-primary bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-100 flex items-center gap-2">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                    Safety Helpline
+                </a>
+            </div>
+            
+            <div class="mt-12 flex flex-wrap justify-center gap-8 text-black/60 text-sm" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    <span>ISO 27001 Certified</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                    <span>256-bit Encryption</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="award" class="w-5 h-5"></i>
+                    <span>GDPR Compliant</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+   <footer class="bg-black text-white py-16 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="About.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">About us</a></li>
+                        <li><a href="Service.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Service</a></li>
+                        <li><a href="Safety.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Contact</a></li>
+                        <!-- <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Careers</a></li> -->
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Products</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Ride</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Drive</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Eat</a></li>
+                        <!-- <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido for Business</a></li> -->
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido Freight</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Global citizenship</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Sustainability</a></li>
+                                                <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Travel</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Reserve</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Airports</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Cities</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 gap-4">
+                <div class="flex gap-4">
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="globe" class="w-5 h-5"></i>
+                        English
+                    </button>
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        Coimbatore
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 text-gray-500 text-sm">
+                © 2024 Rapido. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const navbar = document.getElementById('navbar');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.setAttribute('data-lucide', 'menu');
+                if (window.scrollY <= 100) {
+                    navbar.classList.remove('mobile-nav-bg');
+                }
+            } else {
+                menu.classList.add('active');
+                icon.setAttribute('data-lucide', 'x');
+                navbar.classList.add('mobile-nav-bg');
+            }
+            lucide.createIcons();
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.remove('active');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            
+            document.querySelectorAll('.dropdown-menu').forEach(d => {
+                d.classList.add('hidden');
+                d.classList.remove('active');
+            });
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.add('active'), 10);
+            }
+        }
+        
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.group')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => {
+                    d.classList.add('hidden');
+                    d.classList.remove('active');
+                });
+            }
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                navbar.classList.remove('nav-transparent');
+                navbar.classList.add('nav-solid');
+            } else {
+                navbar.classList.remove('nav-solid');
+                navbar.classList.add('nav-transparent');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Rapido</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('homeimg4.webp');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(252, 194, 27, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(252, 194, 27, 0.8); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCC21B;
+            border-radius: 5px;
+        }
+        
+        /* Navigation Styles */
+        .nav-transparent {
+            background: transparent;
+        }
+        .nav-solid {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 1023px) {
+            .mobile-nav-bg {
+                background: #ffffff !important;
+                border-bottom: 2px solid #FCC21B;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Timeline Styles */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #FCC21B, #e5b100);
+            border-radius: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 30px;
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #FCC21B;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #FCC21B;
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+        
+        /* Value Card */
+        .value-card {
+            transition: all 0.4s ease;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(252, 194, 27, 0.25);
+            border-color: rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Team Card */
+        .team-card {
+            transition: all 0.4s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+        }
+        
+        .team-image {
+            transition: transform 0.4s ease;
+        }
+        
+        /* Stat Counter */
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(252, 194, 27, 0.3);
+        }
+        
+        /* Navigation Link Hover */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FCC21B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown */
+        .dropdown-menu {
+            transform-origin: top;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dropdown-menu.hidden {
+            transform: scaleY(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .dropdown-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -10px rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Hero Pattern */
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(252, 194, 27, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(252, 194, 27, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Achievement Card */
+        .achievement-card {
+            transition: all 0.4s ease;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            border-color: #FCC21B;
+        }
+    </style>
+</head>
+<body class="bg-white overflow-x-hidden">
+
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <img src="logo.webp" 
+                                 alt="Rapido Logo" 
+                                 class="w-13 h-13 object-contain">
+                        </div>
+                        <span class="text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">Stackly</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1" data-aos="fade-down" data-aos-duration="800" data-aos-delay="200">
+                    <!-- Home Dropdown -->
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('home-dropdown')">
+                            Home
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="home-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 1</span>
+                            </a>
+                            <a href="home.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 2</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="service.html" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-4 py-2">Services</a>
+                    
+                    <!-- About Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="About.html">  <button class="nav-link text-[#FCC21B] font-bold flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
+                            About Us
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a> 
+                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                         <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div> 
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors bg-[#FCC21B]/5">
+                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Careers</span>
+                            </a> 
+                        </div> -->
+                    </div>
+                    
+                    <!-- Safety Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="safety.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
+                            Safety
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Safety Features</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Insurance</span>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Desktop CTA -->
+                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
+                                      <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Contact</button></a>
+
+                    <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button>
+                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
+                        Dasbhoard
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                 <a href="login.html">   <button class="text-gray-800 font-medium text-sm">Login</button></a>
+                    <button onclick="toggleMobileMenu()" class="bg-[#FCC21B] text-black p-2.5 rounded-lg hover:bg-[#e5b100] transition-colors shadow-md">
+                        <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="flex flex-col p-6 space-y-1">
+                <!-- Home Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
+                            Home
+                        </span>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
+                    </button>
+                    <div id="mobile-home" class="hidden pl-12 space-y-1 py-2">
+                        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 1
+                        </a>
+                        <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 2
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <a href="service.html" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
+                    <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
+                    Services
+                </a>
+                
+                <!-- About Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="About.html">  <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-lg font-bold text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i>
+                            About Us
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-about-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-about" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-[#FCC21B] py-3 font-bold">
+                            <i data-lucide="info" class="w-5 h-5"></i> About Us
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i> Careers
+                        </a>
+                    </div>
+                </div> -->
+                
+                <!-- Safety Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                <a href="safety.html">   <button onclick="toggleMobileDropdown('mobile-safety')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                            Safety
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-safety-icon"></i> -->
+                    </button></a> 
+                    <!-- <div id="mobile-safety" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i> Safety Features
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield" class="w-5 h-5"></i> Insurance
+                        </a>
+                    </div> -->
+                </div>
+
+                <!-- CTA -->
+                  <div class="pt-6 space-y-4">
+                    <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Contact
+                    </a>
+                </div>
+                <div class="pt-6 space-y-4">
+                    <a href="dash.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Dashboard
+                    </a>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="pt-6 mt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-500 mb-2">Need help?</p>
+                    <a href="tel:080-XXXXXXX" class="text-lg font-bold text-[#FCC21B] flex items-center gap-2">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        080-XXXXXXX
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gray-50 hero-pattern overflow-hidden">
+        <div class="absolute top-20 right-10 w-72 h-72 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    OUR STORY
+                </span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight" data-aos="zoom-in" data-aos-duration="1000">
+                    Building <span class="text-[#FCC21B]">Bharat's</span><br>Mobility Future
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    From a small startup in Bangalore to India's largest bike taxi platform, our journey is about solving real problems and empowering millions of Indians with affordable, accessible transportation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="stat-card bg-gray-50 rounded-2xl p-6 text-center border border-gray-100" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-4xl sm:text-5xl font-bold text-[#FCC21B] mb-2">2015</div>
+                    <div class="text-gray-600 font-medium">Founded</div>
+                </div>
+                <div class="stat-card bg-gray-50 rounded-2xl p-6 text-center border border-gray-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl sm:text-5xl font-bold text-[#FCC21B] mb-2">100+</div>
+                    <div class="text-gray-600 font-medium">Cities</div>
+                </div>
+                <div class="stat-card bg-gray-50 rounded-2xl p-6 text-center border border-gray-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl sm:text-5xl font-bold text-[#FCC21B] mb-2">25M+</div>
+                    <div class="text-gray-600 font-medium">App Downloads</div>
+                </div>
+                <div class="stat-card bg-gray-50 rounded-2xl p-6 text-center border border-gray-100" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl sm:text-5xl font-bold text-[#FCC21B] mb-2">$1.1B</div>
+                    <div class="text-gray-600 font-medium">Valuation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4">
+                        THE BEGINNING
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        From <span class="text-[#FCC21B]">theKarrier</span> to Rapido
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        Rapido was founded in November 2015 by three IIT alumni — <strong>Aravind Sanka</strong> (CEO), <strong>Pavan Guntupalli</strong>, and <strong>SR Rishikesh</strong>. Originally started as "theKarrier," a B2B logistics platform for intra-city truck aggregation, the founders quickly realized that shifting to B2C offered more growth potential.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        The pivot to bike taxis came from a simple observation: Indian cities were choked with traffic, and millions of people needed an affordable, quick way to commute. While Ola and Uber dominated the cab market, they were too expensive for daily use by the masses.
+                    </p>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        With just 15-20 bikes in Bangalore, Rapido was born with a mission to make urban commuting affordable, accessible, and efficient for every Indian.
+                    </p>
+                </div>
+                
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                    <div class="relative grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                                <img src="homeimg1.webp" alt="Bangalore Traffic" class="w-full h-32 object-cover rounded-xl mb-3">
+                                <p class="font-semibold text-gray-900 text-sm">The Problem</p>
+                                <p class="text-xs text-gray-500">Traffic congestion in Indian cities</p>
+                            </div>
+                            <div class="bg-[#FCC21B] rounded-2xl p-4 shadow-lg">
+                                <i data-lucide="lightbulb" class="w-8 h-8 text-black mb-2"></i>
+                                <p class="font-bold text-black text-sm">The Insight</p>
+                                <p class="text-xs text-black/70">20 crore bikes in India, but no organized bike taxi service</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                                <i data-lucide="bike" class="w-8 h-8 text-[#FCC21B] mb-2"></i>
+                                <p class="font-semibold text-gray-900 text-sm">The Solution</p>
+                                <p class="text-xs text-gray-500">Bike taxis - fast, affordable, efficient</p>
+                            </div>
+                            <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                                <img src="homeimg2.webp" alt="Rapido Growth" class="w-full h-32 object-cover rounded-xl mb-3">
+                                <p class="font-semibold text-gray-900 text-sm">The Result</p>
+                                <p class="text-xs text-gray-500">India's #1 bike taxi platform</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    WHY WE EXIST
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Mission & Vision
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="value-card rounded-2xl p-8 border border-gray-200" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="target" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        To make daily commuting more <strong>affordable, convenient, and accessible</strong> for every Indian. We aim to solve urban mobility challenges through technology, emphasizing speed, cost-effectiveness, and user safety.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        We believe that reliable transportation is a right, not a privilege. By leveraging India's existing two-wheeler ecosystem, we create income opportunities for millions while providing affordable rides to billions.
+                    </p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-8 border border-gray-200" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="eye" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        To become the <strong>leading mobility platform</strong> for Bharat, serving every city and town in India. We envision a future where every commute is seamless, safe, and sustainable.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        We're building for Bharat — focusing on Tier 2 and Tier 3 cities where 40% of our users experience ride-sharing for the first time through Rapido. Our goal is to democratize urban mobility across the nation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    WHAT DRIVES US
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Our Core Values
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    The principles that guide every decision we make and every ride we enable.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="users" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Customer First</h3>
+                    <p class="text-sm text-gray-500">Every decision starts with our riders and captains in mind. Their success is our success.</p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="zap" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Speed & Efficiency</h3>
+                    <p class="text-sm text-gray-500">We move fast, execute quickly, and constantly optimize for better performance.</p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Safety Always</h3>
+                    <p class="text-sm text-gray-500">No compromise on safety. Verified captains, insurance coverage, and 24/7 support.</p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="heart" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Empowerment</h3>
+                    <p class="text-sm text-gray-500">Creating livelihood opportunities for millions of captains across India.</p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="leaf" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Sustainability</h3>
+                    <p class="text-sm text-gray-500">Reducing carbon footprint through shared mobility and exploring EV integration.</p>
+                </div>
+                
+                <div class="value-card rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Continuous Innovation</h3>
+                    <p class="text-sm text-gray-500">Always evolving, always improving. From bike taxis to autos, cabs, and beyond.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-24 bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    OUR JOURNEY
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Milestones & Achievements
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div class="timeline-line"></div>
+                
+                <!-- 2015 -->
+                <div class="relative mb-12 md:mb-0" data-aos="fade-up" data-aos-delay="0">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2015</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">The Beginning</h3>
+                            <p class="text-gray-600 text-sm">Founded as theKarrier in Bangalore by Aravind Sanka, Pavan Guntupalli, and Rishikesh SR. Pivoted to Rapido with 15-20 bikes.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2016 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2016</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">First Investment</h3>
+                            <p class="text-gray-600 text-sm">After 75 rejections, secured funding from Pawan Munjal (Hero MotoCorp). Expanded to Gurugram, focusing on Tier 2 & 3 cities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2018 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2018</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Rapid Expansion</h3>
+                            <p class="text-gray-600 text-sm">Crossed 15,000 registered captains and 30,000 daily rides. Rajan Anandan (former Google India head) invested in the company.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2019 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2019</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">1 Crore Users</h3>
+                            <p class="text-gray-600 text-sm">Reached 1 crore registered users. Created over 500,000 jobs for captains across India. Expanded to 25+ cities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2020 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="400">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2020</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Diversification</h3>
+                            <p class="text-gray-600 text-sm">Launched Rapido Auto (on-demand auto rickshaws). Pivoted to logistics during COVID-19, delivering essentials for BigBasket, Swiggy, etc.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2022 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="500">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2022</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Major Funding</h3>
+                            <p class="text-gray-600 text-sm">Raised $180 million in Series D led by Swiggy and TVS Motor. Valuation reached $830 million. Expanded to 100+ cities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2023 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12" data-aos="fade-up" data-aos-delay="600">
+                    <div class="timeline-dot top-0"></div>
+                    <div class="md:w-5/12 md:ml-auto md:pl-8 ml-16 md:ml-0">
+                        <div class="achievement-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                            <span class="inline-block px-3 py-1 bg-[#FCC21B] text-black text-xs font-bold rounded-full mb-2">2023</span>
+                            <h3 class="font-bold text-gray-900 text-lg mb-2">Cab Service Launch</h3>
+                            <p class="text-gray-600 text-sm">Introduced taxicab hailing on the app, directly competing with Ola and Uber. Launched Bike Pink for women commuters.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2024 -->
+                <div class="relative md:mt-12" data-aos="fade-up" data-aos-delay="700">
+                    <div class="timeline-dot top-0" style="box-shadow: 0 0 0 4px #FCC21B, 0 0 20px rgba(252,194,27,0.6);"></div>
+                    <div class="md:w-5/12 md:mr-auto md:pr-8 md:text-right ml-16 md:ml-0">
+                        <div class="achievement-card bg-[#FCC21B] rounded-2xl p-6 shadow-lg border border-[#FCC21B]">
+                            <span class="inline-block px-3 py-1 bg-black text-white text-xs font-bold rounded-full mb-2">2024</span>
+                            <h3 class="font-bold text-black text-lg mb-2">🦄 Unicorn Status</h3>
+                            <p class="text-black/80 text-sm">Raised $200 million in Series E at $1.1 billion valuation. Joined the unicorn club. Serving 25M+ users with 2.5M daily orders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Team -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    MEET THE TEAM
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Our Founders
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Three IIT alumni who dared to challenge the status quo and build for Bharat.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Aravind Sanka -->
+                <div class="team-card bg-gray-50 rounded-2xl overflow-hidden border border-gray-100" data-aos="fade-up" data-aos-delay="0">
+                    <div class="h-64 bg-gradient-to-br from-[#FCC21B]/20 to-[#FCC21B]/40 flex items-center justify-center overflow-hidden">
+                        <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                            <i data-lucide="user" class="w-16 h-16 text-[#FCC21B]"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-gray-900 text-xl mb-1">Aravind Sanka</h3>
+                        <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder & CEO</p>
+                        <p class="text-gray-600 text-sm mb-4">IIT Bhubaneswar (Mechanical Engineering). Former Flipkart supply chain finance lead. First batch of IIT Bhubaneswar, ex-Tata Motors intern.</p>
+                        <div class="flex gap-3">
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pavan Guntupalli -->
+                <div class="team-card bg-gray-50 rounded-2xl overflow-hidden border border-gray-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-64 bg-gradient-to-br from-[#FCC21B]/20 to-[#FCC21B]/40 flex items-center justify-center overflow-hidden">
+                        <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                            <i data-lucide="user" class="w-16 h-16 text-[#FCC21B]"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-gray-900 text-xl mb-1">Pavan Guntupalli</h3>
+                        <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder</p>
+                        <p class="text-gray-600 text-sm mb-4">IIT Kharagpur (Electronics & Communication). Former Samsung Research software developer. Also holds MBA from IIM Bangalore.</p>
+                        <div class="flex gap-3">
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rishikesh SR -->
+                <div class="team-card bg-gray-50 rounded-2xl overflow-hidden border border-gray-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-64 bg-gradient-to-br from-[#FCC21B]/20 to-[#FCC21B]/40 flex items-center justify-center overflow-hidden">
+                        <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                            <i data-lucide="user" class="w-16 h-16 text-[#FCC21B]"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-gray-900 text-xl mb-1">SR Rishikesh</h3>
+                        <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder</p>
+                        <p class="text-gray-600 text-sm mb-4">PES University (Computer & Information Sciences). Founder of IMPStant and TheKarrier. Winner of 'Best Project of the Year' award.</p>
+                        <div class="flex gap-3">
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                            <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
+                                <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Grid -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    PROUD MOMENTS
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Our Impact
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="award" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">Unicorn Status</h3>
+                    <p class="text-sm text-gray-500">$1.1 billion valuation as of September 2024</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="briefcase" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">60 Lakh Jobs</h3>
+                    <p class="text-sm text-gray-500">Created employment for captains across India</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">100+ Cities</h3>
+                    <p class="text-sm text-gray-500">Operating across Tier 1, 2 & 3 cities in India</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="dollar-sign" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">$529M+ Raised</h3>
+                    <p class="text-sm text-gray-500">Total funding from top global investors</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="users" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">1.7M Captains</h3>
+                    <p class="text-sm text-gray-500">Active drivers on our platform</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="activity" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">2.5M Daily</h3>
+                    <p class="text-sm text-gray-500">Orders completed every single day</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="star" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">4.5★ Rating</h3>
+                    <p class="text-sm text-gray-500">Average app store rating by users</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center" data-aos="fade-up" data-aos-delay="700">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="heart" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">85% Repeat</h3>
+                    <p class="text-sm text-gray-500">Users who come back for more rides</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investors Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    BACKED BY THE BEST
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Our Investors
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Supported by leading global investors who believe in our vision.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-center">
+                        <i data-lucide="building-2" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">WestBridge Capital</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center">
+                        <i data-lucide="utensils" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">Swiggy</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <i data-lucide="bike" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">Hero MotoCorp</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center">
+                        <i data-lucide="search" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">Nexus Ventures</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center">
+                        <i data-lucide="fuel" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">Shell Ventures</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-center">
+                        <i data-lucide="tv" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">TVS Motor</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-center">
+                        <i data-lucide="globe" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">Integrated Capital</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 flex items-center justify-center border border-gray-100 hover:border-[#FCC21B] transition-colors" data-aos="fade-up" data-aos-delay="700">
+                    <div class="text-center">
+                        <i data-lucide="trending-up" class="w-12 h-12 text-gray-400 mx-auto mb-2"></i>
+                        <p class="font-semibold text-gray-700">xto10x</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-[#FCC21B] relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('homeimg3.html')] opacity-10"></div>
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-6" data-aos="fade-up">
+                Join the Revolution
+            </h2>
+            <p class="text-black/70 mb-10 max-w-2xl mx-auto text-lg" data-aos="fade-up" data-aos-delay="100">
+                Be part of India's mobility transformation. Whether you're looking to ride, drive, or build with us — there's a place for you at Rapido.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="404.html" class="btn-primary bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-900 flex items-center gap-2">
+                    <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    View Careers
+                </a>
+                <a href="404.html" class="btn-primary bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-100 flex items-center gap-2">
+                    <i data-lucide="bike" class="w-5 h-5"></i>
+                    Our Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-16 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="About.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">About us</a></li>
+                        <li><a href="Service.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Service</a></li>
+                        <li><a href="Safety.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Contact</a></li>
+                        <!-- <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Careers</a></li> -->
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Products</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Ride</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Drive</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Eat</a></li>
+                        <!-- <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido for Business</a></li> -->
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido Freight</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Global citizenship</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Sustainability</a></li>
+                                                <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Travel</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Reserve</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Airports</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Cities</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 gap-4">
+                <div class="flex gap-4">
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="globe" class="w-5 h-5"></i>
+                        English
+                    </button>
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        Coimbatore
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 text-gray-500 text-sm">
+                © 2024 Rapido. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const navbar = document.getElementById('navbar');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.setAttribute('data-lucide', 'menu');
+                if (window.scrollY <= 100) {
+                    navbar.classList.remove('mobile-nav-bg');
+                }
+            } else {
+                menu.classList.add('active');
+                icon.setAttribute('data-lucide', 'x');
+                navbar.classList.add('mobile-nav-bg');
+            }
+            lucide.createIcons();
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.remove('active');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            
+            document.querySelectorAll('.dropdown-menu').forEach(d => {
+                d.classList.add('hidden');
+                d.classList.remove('active');
+            });
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.add('active'), 10);
+            }
+        }
+        
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.group')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => {
+                    d.classList.add('hidden');
+                    d.classList.remove('active');
+                });
+            }
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                navbar.classList.remove('nav-transparent');
+                navbar.classList.add('nav-solid');
+            } else {
+                navbar.classList.remove('nav-solid');
+                navbar.classList.add('nav-transparent');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

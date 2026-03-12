@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaBlog - Insights & Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --primary-white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-600: #525252;
+            --gray-800: #262626;
+            --accent-green: #10b981;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.scrolled {
+            height: 70px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        /* Logo */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: logoPulse 3s infinite;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        /* Home Dropdown Button */
+        .home-dropdown {
+            position: relative;
+        }
+
+        .home-btn-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--primary-black);
+            color: var(--primary-white);
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-btn-dropdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .home-btn-dropdown:hover::before {
+            left: 100%;
+        }
+
+        .home-btn-dropdown:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .home-btn-dropdown svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s;
+        }
+
+        .home-dropdown.active .home-btn-dropdown svg:last-child {
+            transform: rotate(180deg);
+        }
+
+        .home-menu {
+            position: absolute;
+            top: calc(100% + 15px);
+            left: 0;
+            background: white;
+            border-radius: 20px;
+            padding: 12px;
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            border: 1px solid var(--gray-100);
+        }
+
+        .home-dropdown.active .home-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .home-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--primary-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            transition: width 0.3s;
+        }
+
+        .home-menu-item:hover::before {
+            width: 100%;
+        }
+
+        .home-menu-item:hover {
+            background: var(--gray-50);
+            transform: translateX(5px);
+        }
+
+        .home-menu-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: var(--gray-100);
+            transition: all 0.3s;
+        }
+
+        .home-menu-item:hover .home-menu-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .home-menu-text h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .home-menu-text p {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        /* Regular Dropdowns */
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .dropdown-toggle:hover {
+            color: var(--primary-black);
+            background: var(--gray-100);
+        }
+
+        .dropdown-arrow {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: white;
+            border-radius: 20px;
+            padding: 12px;
+            min-width: 260px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            border: 1px solid var(--gray-100);
+        }
+
+        .dropdown.active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--primary-black);
+        }
+
+        .dropdown-item:hover {
+            background: var(--gray-50);
+            transform: translateX(8px);
+        }
+
+        .dropdown-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gray-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover .dropdown-icon {
+            transform: scale(1.1);
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .dropdown-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-label {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .dropdown-desc {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 2px;
+        }
+
+        /* CTA Button */
+        .nav-cta {
+            padding: 12px 28px;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+            background: none;
+            border: none;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--primary-black);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 999;
+            padding: 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-nav-links a {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-black);
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-links a:hover {
+            background: var(--gray-100);
+        }
+
+        /* Mobile Home Dropdown Styles */
+        .mobile-home-dropdown {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .mobile-home-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--primary-black);
+            color: white;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .mobile-home-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .mobile-home-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+
+        .mobile-home-dropdown.active .mobile-home-btn svg:last-child {
+            transform: rotate(180deg);
+        }
+
+        .mobile-home-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s, margin 0.3s;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .mobile-home-dropdown.active .mobile-home-menu {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 12px;
+        }
+
+        .mobile-home-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--primary-black);
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .mobile-home-item:hover {
+            background: var(--gray-100);
+            transform: translateX(8px);
+        }
+
+        .mobile-home-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .mobile-home-icon {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .mobile-home-item:hover .mobile-home-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Mobile Regular Buttons (not dropdowns) */
+        .mobile-nav-links .mobile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-black);
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+        }
+
+        .mobile-nav-links .mobile-btn:hover {
+            background: var(--gray-200);
+            transform: translateX(5px);
+        }
+
+        /* Blog Hero Section */
+        .blog-hero {
+            margin-top: 80px;
+            padding: 100px 60px;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        .blog-hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--gray-200);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .blog-hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blog-hero p {
+            font-size: 20px;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 24px;
+            border: 2px solid var(--gray-200);
+            border-radius: 50px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 40px 60px;
+            background: white;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .categories-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 12px 24px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary-black);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Featured Post */
+        .featured-section {
+            padding: 80px 60px;
+            background: white;
+        }
+
+        .featured-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .view-all {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .view-all:hover {
+            gap: 12px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .featured-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--gray-100);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+
+        .featured-image {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .featured-card:hover .featured-image img {
+            transform: scale(1.1);
+        }
+
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background: var(--accent-orange);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .featured-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .featured-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .featured-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: var(--primary-black);
+        }
+
+        .featured-card p {
+            color: var(--gray-600);
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .author-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin: 0;
+        }
+
+        /* Side Posts */
+        .side-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-card {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .side-card:hover {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateX(10px);
+        }
+
+        .side-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .side-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .side-card:hover .side-image img {
+            transform: scale(1.1);
+        }
+
+        .side-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .side-category {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .side-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            color: var(--primary-black);
+        }
+
+        .side-date {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        /* Blog Grid */
+        .blog-section {
+            padding: 80px 60px;
+            background: var(--gray-50);
+        }
+
+        .blog-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid var(--gray-100);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            border-color: transparent;
+        }
+
+        .blog-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 100%);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 6px 14px;
+            background: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-black);
+            z-index: 1;
+        }
+
+        .blog-content {
+            padding: 24px;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .blog-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: var(--primary-black);
+        }
+
+        .blog-card p {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 100px 60px;
+            background: var(--primary-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .newsletter-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .newsletter h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .newsletter p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-family: inherit;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .newsletter-btn {
+            padding: 18px 32px;
+            background: white;
+            color: var(--primary-black);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-black);
+            color: white;
+            padding: 80px 60px 40px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            -webkit-text-fill-color: white;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: var(--gray-400);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .social-link:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
+            border-color: transparent;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-purple);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            color: var(--gray-400);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .blog-hero h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+                height: 70px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-cta {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            .blog-hero {
+                padding: 60px 20px;
+            }
+            
+            .blog-hero h1 {
+                font-size: 36px;
+            }
+            
+            .categories,
+            .featured-section,
+            .blog-section,
+            .newsletter,
+            .footer {
+                padding: 60px 20px;
+            }
+            
+            .blog-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+         <div class="logo-container" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <img src="logo.webp" alt="RideGo Logo" class="logo-img">
+            <span class="logo-text">STACKLY</span>
+        </div>
+
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <!-- Home Dropdown -->
+                <li class="nav-item home-dropdown" id="homeDropdown">
+                    <button class="home-btn-dropdown">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span>Home</span>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="home-menu">
+                        <a href="index.html" class="home-menu-item">
+                            <div class="home-menu-icon">🏠</div>
+                            <div class="home-menu-text">
+                                <h4>Homepage 1</h4>
+                                <!-- <p>Main landing page</p> -->
+                            </div>
+                        </a>
+                        <a href="home.html" class="home-menu-item">
+                            <div class="home-menu-icon">🏡</div>
+                            <div class="home-menu-text">
+                                <h4>Homepage 2</h4>
+                                <!-- <p>Alternative design</p> -->
+                            </div>
+                        </a>
+                        <a href="login.html" class="home-menu-item">
+                            <div class="home-menu-icon">🔐</div>
+                            <div class="home-menu-text">
+                                <h4>Login</h4>
+                                <!-- <p>Access your account</p> -->
+                            </div>
+                        </a>
+                        <a href="dash.html" class="home-menu-item">
+                            <div class="home-menu-icon">📊</div>
+                            <div class="home-menu-text">
+                                <h4>Dashboard</h4>
+                                <!-- <p>Manage your content</p> -->
+                            </div> 
+                        </a>
+                    </div>
+                </li>
+
+                <!-- Categories Dropdown -->
+                <!-- <li class="nav-item dropdown" id="categoriesDropdown">
+                    <div class="dropdown-toggle">
+                       Blog
+                        <svg class="dropdown-arrow" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="404.html" class="dropdown-item">
+                            <div class="dropdown-icon">💼</div>
+                            <div class="dropdown-text">
+                                < <span class="dropdown-label">Business</span> -->
+                                <!-- <span class="dropdown-desc">Strategy & growth</span>
+                            </div>
+                        </a>
+                        <a href="404.html" class="dropdown-item">
+                            <div class="dropdown-icon">💻</div>
+                            <div class="dropdown-text">
+                                <span class="dropdown-label">Technology</span>
+                                 <span class="dropdown-desc">Tech trends & tools</span> 
+                            </div>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <div class="dropdown-icon">🎨</div>
+                            <div class="dropdown-text">
+                                <span class="dropdown-label">Design</span>
+                                <span class="dropdown-desc">UI/UX & creativity</span>
+                            </div>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <div class="dropdown-icon">📈</div>
+                            <div class="dropdown-text">
+                                <span class="dropdown-label">Marketing</span>
+                                <span class="dropdown-desc">Growth & SEO</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>  -->
+
+                <!-- Resources Dropdown -->
+                <li class="nav-item">
+                    <a href="blog.html" class="dropdown-toggle">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="buss.html" class="dropdown-toggle">Business</a>
+                </li>
+                 <!-- <li class="nav-item">
+                    <a href="contact.html" class="dropdown-toggle">Contact</a>
+                </li> -->
+            </ul>
+
+          <a href="eror.html">  <button class="nav-cta">Get Started</button></a>
+
+            <button class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <!-- Mobile Home Dropdown -->
+            <li class="mobile-home-dropdown" id="mobileHomeDropdown">
+                <button class="mobile-home-btn">
+                    <span style="display: flex; align-items: center; gap: 10px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Home
+                    </span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="mobile-home-menu">
+                    <a href="index.html" class="mobile-home-item">
+                        <div class="mobile-home-icon">🏠</div>
+                        <span>Homepage 1</span>
+                    </a>
+                    <a href="home.html" class="mobile-home-item">
+                        <div class="mobile-home-icon">🏡</div>
+                        <span>Homepage 2</span>
+                    </a>
+                    <a href="login.html" class="mobile-home-item">
+                        <div class="mobile-home-icon">🔐</div>
+                        <span>Login</span>
+                    </a>
+                    <a href="dash.html" class="mobile-home-item">
+                        <div class="mobile-home-icon">📊</div>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- Regular Mobile Buttons (Not Dropdowns) -->
+            <li>
+                <a href="blog.html" class="mobile-btn">
+                    <span>Blog</span>
+                    <span>→</span>
+                </a>
+            </li>
+            <li>
+                <a href="buss.html" class="mobile-btn">
+                    <span>Busniess</span>
+                    <span>→</span>
+                </a>
+            </li>
+            <li>
+                <!-- <a href="about.html" class="mobile-btn">
+                    <span>About</span>
+                    <span>→</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html" class="mobile-btn">
+                    <span>Login</span>
+                    <span>→</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboard.html" class="mobile-btn">
+                    <span>Dashboard</span>
+                    <span>→</span>
+                </a>
+            </li>
+            <li> -->
+                <a href="eror.html" style="background: var(--primary-black); color: white; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 700; text-decoration: none;">
+                    <span>Get Started</span>
+                    <span>→</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Blog Hero --><!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <div class="blog-badge">
+                <span>✍️</span>
+                Latest Insights & Stories
+            </div>
+            <h1>Explore Our Blog</h1>
+            <p>Discover the latest trends, strategies, and insights to help you grow your business and stay ahead of the curve.</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search articles, topics, or keywords...">
+                <button class="search-btn">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="categories-container">
+            <button class="category-btn active">All Posts</button>
+            <button class="category-btn">Business</button>
+            <button class="category-btn">Technology</button>
+            <button class="category-btn">Design</button>
+            <button class="category-btn">Marketing</button>
+            <button class="category-btn">Startup</button>
+            <button class="category-btn">Productivity</button>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured-section">
+        <div class="featured-container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Featured Story</h2>
+                <a href="eror.html" class="view-all">
+                    View All
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="featured-grid">
+                <article class="featured-card fade-in">
+                    <div class="featured-image">
+                        <img src="homeimg2" alt="Remote Work">
+                    </div>
+                    <span class="featured-badge">Featured</span>
+                    <div class="featured-content">
+                        <div class="featured-meta">
+                            <span>📅 Jan 15, 2024</span>
+                            <span>⏱️ 8 min read</span>
+                            <span>👁️ 2.4k views</span>
+                        </div>
+                        <h2>The Future of Remote Work: How to Build a Distributed Team That Thrives</h2>
+                        <p>Discover the strategies and tools that successful companies use to manage remote teams effectively. From communication frameworks to productivity metrics, learn how to create a culture of excellence regardless of location.</p>
+                        <div class="featured-author">
+                            <img src="homeimg2.webp" class="author-avatar" alt="Sarah Kim">
+                            <div class="author-info">
+                                <h4>Sarah Kim</h4>
+                                <p>Editor in Chief</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="side-posts">
+                    <article class="side-card fade-in">
+                        <div class="side-image">
+                            <img src="homeimg4.webp" alt="AI Technology">
+                        </div>
+                        <div class="side-content">
+                            <span class="side-category">Technology</span>
+                            <h3>AI Tools That Are Changing How We Work</h3>
+                            <span class="side-date">Jan 12, 2024</span>
+                        </div>
+                    </article>
+
+                    <article class="side-card fade-in">
+                        <div class="side-image">
+                            <img src="homeimg3.webp" alt="Design">
+                        </div>
+                        <div class="side-content">
+                            <span class="side-category">Design</span>
+                            <h3>Minimalism in Modern Web Design</h3>
+                            <span class="side-date">Jan 10, 2024</span>
+                        </div>
+                    </article>
+
+                    <article class="side-card fade-in">
+                        <div class="side-image">
+                            <img src="homeimg5.webp" alt="Business Meeting">
+                        </div>
+                        <div class="side-content">
+                            <span class="side-category">Business</span>
+                            <h3>Scaling Your Startup: Lessons from Unicorn Founders</h3>
+                            <span class="side-date">Jan 8, 2024</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="blog-section">
+        <div class="blog-container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Latest Articles</h2>
+                <a href="eror.html" class="view-all">
+                    View All Posts
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg1.webp" alt="Marketing">
+                        <span class="blog-category">Marketing</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 14, 2024</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3>Content Marketing Strategies for 2024</h3>
+                        <p>Learn how to create compelling content that drives engagement and converts readers into customers.</p>
+                        <a href="eror.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg2.webp" alt="Startup Team">
+                        <span class="blog-category">Startup</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 13, 2024</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3>From Idea to IPO: The Startup Journey</h3>
+                        <p>Insights from founders who have successfully navigated the path from concept to public company.</p>
+                        <a href="eror.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg3.webp" alt="Productivity">
+                        <span class="blog-category">Productivity</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 11, 2024</span>
+                            <span>4 min read</span>
+                        </div>
+                        <h3>Deep Work: Maximizing Your Focus</h3>
+                        <p>Techniques for achieving flow state and accomplishing more in less time.</p>
+                        <a href="eror.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg5.webp" alt="Business Meeting">
+                        <span class="blog-category">Business</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 9, 2024</span>
+                            <span>7 min read</span>
+                        </div>
+                        <h3>The Art of Negotiation: Closing Better Deals</h3>
+                        <p>Master the skills needed to negotiate effectively and create win-win outcomes.</p>
+                        <a href="eror.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg4.webp" alt="Blockchain">
+                        <span class="blog-category">Technology</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 7, 2024</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3>Blockchain Beyond Crypto: Real World Applications</h3>
+                        <p>Exploring how blockchain technology is revolutionizing industries from supply chain to healthcare.</p>
+                        <a href="error.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <img src="homeimg3.webp" alt="Design Color">
+                        <span class="blog-category">Design</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>Jan 5, 2024</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3>Color Psychology in Branding</h3>
+                        <p>How strategic color choices can influence customer perception and drive brand recognition.</p>
+                        <a href="error.html" class="read-more">
+                            Read More
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>Stay in the Loop</h2>
+            <p>Get the latest articles, resources, and insights delivered straight to your inbox every week.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                <button type="submit" class="newsletter-btn">Subscribe Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800;">N</div>
+                    <span class="logo-text" style="font-size: 24px;">NexaBlog</span>
+                </div>
+                <p>Your source for the latest insights in business, technology, design, and marketing. Helping you stay ahead in a rapidly evolving world.</p>
+                <div class="social-links">
+                    <a href="error.html" class="social-link">📘</a>
+                    <a href="error.html" class="social-link">🐦</a>
+                    <a href="error.html" class="social-link">📸</a>
+                    <a href="error.html" class="social-link">💼</a>
+                    <a href="error.html" class="social-link">▶️</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Content</h4>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="buss.html">Business</a></li>
+                    <!-- <li><a href="mark.html">Marketing</a></li>
+                    <li><a href="star.html">Startup</a></li> -->
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="error.html">About Us</a></li>
+                    <li><a href="error.html">Careers</a></li>
+                    <li><a href="error.html">Write for Us</a></li>
+                    <li><a href="error.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="error.html">Privacy Policy</a></li>
+                    <li><a href="error.html">Terms of Service</a></li>
+                    <li><a href="error.html">Cookie Policy</a></li>
+                    <li><a href="error.html">GDPR</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaBlog Inc. All rights reserved.</p>
+            <div style="display: flex; gap: 30px;">
+                <a href="error.html">Privacy</a>
+                <a href="error.html">Terms</a>
+                <a href="error.html">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Home Dropdown
+        const homeDropdown = document.getElementById('homeDropdown');
+        const homeBtn = homeDropdown.querySelector('.home-btn-dropdown');
+        
+        homeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            homeDropdown.classList.toggle('active');
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+        });
+
+        // Regular Dropdowns
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                homeDropdown.classList.remove('active');
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Close all dropdowns when clicking outside
+        document.addEventListener('click', () => {
+            dropdowns.forEach(d => d.classList.remove('active'));
+            homeDropdown.classList.remove('active');
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Mobile Home Dropdown Toggle
+        const mobileHomeDropdown = document.getElementById('mobileHomeDropdown');
+        const mobileHomeBtn = mobileHomeDropdown.querySelector('.mobile-home-btn');
+
+        mobileHomeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileHomeDropdown.classList.toggle('active');
+        });
+
+        // Close mobile home dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileHomeDropdown.contains(e.target)) {
+                mobileHomeDropdown.classList.remove('active');
+            }
+        });
+
+        // Close mobile menu when clicking a link (except home dropdown button)
+        document.querySelectorAll('.mobile-nav-links a, .mobile-home-item').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileHomeDropdown.classList.remove('active');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Category buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button ripple effect
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255,255,255,0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: rippleEffect 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to { transform: scale(4); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

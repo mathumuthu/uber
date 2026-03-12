@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Rapido</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(252, 194, 27, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(252, 194, 27, 0.8); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCC21B;
+            border-radius: 5px;
+        }
+        
+        /* Navigation Styles */
+        .nav-transparent {
+            background: transparent;
+        }
+        .nav-solid {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 1023px) {
+            .mobile-nav-bg {
+                background: #ffffff !important;
+                border-bottom: 2px solid #FCC21B;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Service Card Hover Effects */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(252, 194, 27, 0.25);
+            border-color: rgba(252, 194, 27, 0.5);
+        }
+        
+        .service-icon-wrapper {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon-wrapper {
+            background: #FCC21B;
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-card:hover .service-icon-wrapper svg {
+            color: #000000;
+        }
+        
+        /* Feature Card */
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(252, 194, 27, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(252, 194, 27, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(252, 194, 27, 0.2);
+        }
+        
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -10px rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Navigation Link Hover */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FCC21B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown */
+        .dropdown-menu {
+            transform-origin: top;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dropdown-menu.hidden {
+            transform: scaleY(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .dropdown-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Hero Background Pattern */
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(252, 194, 27, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(252, 194, 27, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Pricing Card */
+        .pricing-card {
+            transition: all 0.4s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Process Step */
+        .process-step {
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #FCC21B;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step::after {
+                display: none;
+            }
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-white overflow-x-hidden">
+
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <img src="logo.webp" 
+                                 alt="Rapido Logo" 
+                                 class="w-13 h-13 object-contain">
+                        </div>
+                        <span class="text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">Stackly</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1" data-aos="fade-down" data-aos-duration="800" data-aos-delay="200">
+                    <!-- Home Dropdown -->
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('home-dropdown')">
+                            Home
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="home-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 1</span>
+                            </a>
+                            <a href="home.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 2</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="service.html" class="nav-link text-[#FCC21B] font-bold px-4 py-2">Services</a>
+                    
+                    <!-- About Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="About.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
+                            About Us
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Piricing</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Careers</span>
+                            </a>
+                        </div> -->
+                    </div>
+                    
+                    <!-- Safety Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="safety.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
+                            Safety
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Safety Features</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Insurance</span>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Desktop CTA -->
+                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
+                                      <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Contact</button></a>
+
+                  <a href="login.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>
+                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
+                        Dasbhoard
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                    <button class="text-gray-800 font-medium text-sm">Login</button>
+                    <button onclick="toggleMobileMenu()" class="bg-[#FCC21B] text-black p-2.5 rounded-lg hover:bg-[#e5b100] transition-colors shadow-md">
+                        <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="flex flex-col p-6 space-y-1">
+                <!-- Home Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
+                            Home
+                        </span>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
+                    </button>
+                    <div id="mobile-home" class="hidden pl-12 space-y-1 py-2">
+                        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 1
+                        </a>
+                        <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 2
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <a href="service.html" onclick="closeMobileMenu()" class="text-lg font-bold text-[#FCC21B] py-4 border-b border-gray-200 flex items-center gap-3 px-3">
+                    <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
+                    Services
+                </a>
+                
+                <!-- About Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="About.html">  <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <!-- <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i> -->
+                            About Us
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-about-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-about" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="info" class="w-5 h-5"></i> Pricing
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i> Careers
+                        </a>
+                    </div> -->
+                </div>
+                
+                <!-- Safety Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="safety.html">  <button onclick="toggleMobileDropdown('mobile-safety')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <!-- <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i> -->
+                            Safety
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-safety-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-safety" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i> Safety Features
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield" class="w-5 h-5"></i> Insurance
+                        </a>
+                    </div> -->
+                </div>
+                
+
+<div class="pt-6 space-y-4">
+                    <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Contact
+                    </a>
+                </div>
+
+
+
+
+                <!-- CTA -->
+                <div class="pt-6 space-y-4">
+                    <a href="dash.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Dasbhoard
+                    </a>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="pt-6 mt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-500 mb-2">Need help?</p>
+                    <a href="tel:080-XXXXXXX" class="text-lg font-bold text-[#FCC21B] flex items-center gap-2">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        080-XXXXXXX
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gray-50 hero-pattern overflow-hidden">
+        <div class="absolute top-20 right-10 w-72 h-72 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    WHAT WE OFFER
+                </span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight" data-aos="zoom-in" data-aos-duration="1000">
+                    Our <span class="text-[#FCC21B]">Services</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    From quick bike rides to premium cabs, parcel delivery to metro tickets - we have everything you need to move around the city efficiently.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">8+</div>
+                        <div class="text-gray-600 text-sm">Services</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">100+</div>
+                        <div class="text-gray-600 text-sm">Cities</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">25M+</div>
+                        <div class="text-gray-600 text-sm">Happy Users</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Services Grid -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Choose Your Ride
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in" data-aos-delay="200"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+                    Multiple options to suit every need and budget. Select the perfect service for your journey.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+                <!-- Bike -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="0">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="bike" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Bike</h3>
+                    <p class="text-sm text-gray-500 mb-4">Beat traffic with the quickest way to commute. Perfect for solo travelers.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹15</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Auto -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="car" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Auto</h3>
+                    <p class="text-sm text-gray-500 mb-4">Comfortable 3-wheeler rides for up to 3 passengers. No haggling, fixed fares.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹30</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Auto Share -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="users" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Auto Share</h3>
+                    <p class="text-sm text-gray-500 mb-4">Share your ride and split the cost. Eco-friendly and budget-friendly option.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Save up to 50%</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Parcel -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="package" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Parcel</h3>
+                    <p class="text-sm text-gray-500 mb-4">Send packages across the city instantly. Real-time tracking included.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹25</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Cab Economy -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="car-front" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Cab Economy</h3>
+                    <p class="text-sm text-gray-500 mb-4">Affordable 4-wheeler rides for everyday travel. AC comfort at low prices.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹50</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Cab Premium -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Cab Premium</h3>
+                    <p class="text-sm text-gray-500 mb-4">Luxury sedans and SUVs for special occasions. Professional chauffeurs.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Premium Experience</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Metro Ticket -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="train-front" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Metro Ticket</h3>
+                    <p class="text-sm text-gray-500 mb-4">Book metro tickets digitally. Skip the queues and travel seamlessly.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Zero Booking Fee</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Travel -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="700">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="palmtree" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Travel</h3>
+                    <p class="text-sm text-gray-500 mb-4">Outstation trips and intercity travel. One-way and round-trip options.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Book Now</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    SIMPLE STEPS
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    How It Works
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="smartphone" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">1. Open App</h3>
+                    <p class="text-gray-600 text-sm">Launch the Rapido app on your smartphone</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="map-pin" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">2. Enter Location</h3>
+                    <p class="text-gray-600 text-sm">Set your pickup and drop-off points</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="bike" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">3. Choose Service</h3>
+                    <p class="text-gray-600 text-sm">Select from Bike, Auto, Cab or Parcel</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="check-circle" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">4. Enjoy Ride</h3>
+                    <p class="text-gray-600 text-sm">Track your ride and reach destination safely</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4">
+                        WHY CHOOSE RAPIDO
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Features That Make Us <span class="text-[#FCC21B]">#1</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        We constantly innovate to provide you with the best ride experience. Here's what sets us apart from the competition.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="zap" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Lightning Fast</h4>
+                                <p class="text-xs text-gray-500">Avg pickup under 5 mins</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Safe Rides</h4>
+                                <p class="text-xs text-gray-500">Verified captains only</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="wallet" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Best Prices</h4>
+                                <p class="text-xs text-gray-500">Transparent, no hidden fees</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="headphones" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">24/7 Support</h4>
+                                <p class="text-xs text-gray-500">Always here to help</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Live Tracking</h4>
+                                <p class="text-xs text-gray-500">Real-time ride updates</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="credit-card" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Easy Payment</h4>
+                                <p class="text-xs text-gray-500">Multiple payment options</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-6 border border-gray-100">
+                        <img src="homeimg5.webp" alt="Rapido App" class="w-full h-auto rounded-2xl mb-6 object-cover">
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="bike" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Bike Taxi</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 2 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹45</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="car" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Auto</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 4 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹78</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="car-front" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Cab Economy</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 6 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹125</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Comparison -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    TRANSPARENT PRICING
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Compare & Save
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    Sample fares for a 5km ride. Actual prices may vary based on traffic and demand.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="bike" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Bike</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹35</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Fastest option
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Beat traffic
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Solo ride
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border-2 border-[#FCC21B] text-center relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FCC21B] text-black text-xs font-bold px-3 py-1 rounded-full">
+                        POPULAR
+                    </div>
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="car" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Auto</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹65</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Comfortable
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Up to 3 passengers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Weather protection
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-[#FCC21B] text-black rounded-xl font-bold hover:bg-[#e5b100] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="car-front" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Cab Economy</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹95</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            AC comfort
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Up to 4 passengers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Trunk space
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Cab Premium</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹145</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Luxury vehicles
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Professional drivers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Premium experience
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-[#FCC21B] relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('homeimg4.webp')] opacity-10"></div>
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-6" data-aos="fade-up">
+                Ready to Get Moving?
+            </h2>
+            <p class="text-black/70 mb-10 max-w-2xl mx-auto text-lg" data-aos="fade-up" data-aos-delay="100">
+                Download the app now and experience the fastest, most affordable way to travel in your city.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn-primary bg-black text-white px-8 py-4 rounded-xl flex items-center gap-4 hover:bg-gray-900 group">
+                    <i data-lucide="apple" class="w-8 h-8"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-400">Download on the</div>
+                        <div class="text-xl font-bold">App Store</div>
+                    </div>
+                </button>
+                
+                <button class="btn-primary bg-black text-white px-8 py-4 rounded-xl flex items-center gap-4 hover:bg-gray-900 group">
+                    <i data-lucide="play" class="w-8 h-8"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-400">Get it on</div>
+                        <div class="text-xl font-bold">Google Play</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-16 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="About.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">About us</a></li>
+                        <li><a href="Service.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Service</a></li>
+                        <li><a href="Safety.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Contact</a></li>
+                        <!-- <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Careers</a></li> -->
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Products</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Ride</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Drive</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Eat</a></li>
+                        <!-- <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido for Business</a></li> -->
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Rapido Freight</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Global citizenship</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Safety</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Sustainability</a></li>
+                                                <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Gift cards</a></li>
+
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Travel</h3>
+                    <ul class="space-y-3">
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Reserve</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Airports</a></li>
+                        <li><a href="404.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Cities</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 gap-4">
+                <div class="flex gap-4">
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="globe" class="w-5 h-5"></i>
+                        English
+                    </button>
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        Coimbatore
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 text-gray-500 text-sm">
+                © 2024 Rapido. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const navbar = document.getElementById('navbar');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.setAttribute('data-lucide', 'menu');
+                if (window.scrollY <= 100) {
+                    navbar.classList.remove('mobile-nav-bg');
+                }
+            } else {
+                menu.classList.add('active');
+                icon.setAttribute('data-lucide', 'x');
+                navbar.classList.add('mobile-nav-bg');
+            }
+            lucide.createIcons();
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.remove('active');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            
+            document.querySelectorAll('.dropdown-menu').forEach(d => {
+                d.classList.add('hidden');
+                d.classList.remove('active');
+            });
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.add('active'), 10);
+            }
+        }
+        
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.group')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => {
+                    d.classList.add('hidden');
+                    d.classList.remove('active');
+                });
+            }
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                navbar.classList.remove('nav-transparent');
+                navbar.classList.add('nav-solid');
+            } else {
+                navbar.classList.remove('nav-solid');
+                navbar.classList.add('nav-transparent');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

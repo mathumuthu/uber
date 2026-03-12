@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Captain Dashboard - Rapido</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(252, 194, 27, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(252, 194, 27, 0.8); }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCC21B;
+            border-radius: 3px;
+        }
+        
+        /* Header - Mobile Optimized */
+        .header-mobile {
+            height: 56px;
+        }
+        
+        @media (min-width: 1024px) {
+            .header-mobile {
+                height: 72px;
+            }
+        }
+        
+        /* Navigation Styles */
+        .nav-solid {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            padding-bottom: 100px; /* Increased for taller nav */
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-menu {
+                top: 72px;
+            }
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Dashboard Sidebar */
+        .dashboard-sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            width: 260px;
+            background: white;
+            z-index: 9998;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            border-right: 1px solid #e5e7eb;
+        }
+        
+        @media (min-width: 1024px) {
+            .dashboard-sidebar {
+                position: sticky;
+                top: 72px;
+                transform: translateX(0);
+                height: calc(100vh - 72px);
+            }
+        }
+        
+        .dashboard-sidebar.active {
+            transform: translateX(0);
+        }
+        
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9997;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Navigation Link Hover */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FCC21B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown */
+        .dropdown-menu {
+            transform-origin: top;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-menu.hidden {
+            transform: scaleY(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .dropdown-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -10px rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Sidebar Link */
+        .sidebar-link {
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(252, 194, 27, 0.1);
+            color: #FCC21B;
+        }
+        
+        .sidebar-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #FCC21B;
+        }
+        
+        /* Dashboard Cards - FIXED */
+        .dashboard-card {
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #f3f4f6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Stats Card Specific Styling */
+        .stat-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        
+        .stat-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.2;
+        }
+        
+        /* Online Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #10b981;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        /* ============================================
+           FIXED MOBILE BOTTOM NAVIGATION - TALLER
+           ============================================ */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            z-index: 999;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            /* INCREASED HEIGHT: 64px + safe area */
+            height: calc(64px + env(safe-area-inset-bottom, 0px));
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-bottom-nav {
+                display: none;
+            }
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* MINIMUM TOUCH TARGET: 48px */
+            min-width: 48px;
+            min-height: 48px;
+            padding: 8px 12px 4px;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+        
+        .bottom-nav-item:active {
+            transform: scale(0.95);
+        }
+        
+        .bottom-nav-item.active {
+            color: #FCC21B;
+        }
+        
+        /* Icon container for consistent sizing */
+        .bottom-nav-item .icon-container {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2px;
+            position: relative;
+        }
+        
+        .bottom-nav-item svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+        }
+        
+        /* CENTER POWER BUTTON - LARGER TOUCH TARGET */
+        .bottom-nav-power {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* LARGER TOUCH TARGET */
+            min-width: 64px;
+            min-height: 64px;
+            padding: 0;
+            margin-top: -20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .power-button {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FCC21B 0%, #FFD700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(252, 194, 27, 0.4), 
+                        0 0 0 4px #ffffff;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .power-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(252, 194, 27, 0.3), 
+                        0 0 0 4px #ffffff;
+        }
+        
+        .power-button svg {
+            width: 28px;
+            height: 28px;
+            color: #000000;
+            stroke-width: 2.5;
+        }
+        
+        /* Active indicator dot */
+        .bottom-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 4px;
+            height: 4px;
+            background: #FCC21B;
+            border-radius: 50%;
+        }
+        
+        /* Mobile Footer */
+        .mobile-footer {
+            display: block;
+            background: #000;
+            color: white;
+            padding: 32px 20px;
+            /* INCREASED for taller nav */
+            margin-bottom: 80px;
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-footer {
+                display: none;
+            }
+        }
+        
+        /* Desktop Footer */
+        .desktop-footer {
+            display: none;
+        }
+        
+        @media (min-width: 1024px) {
+            .desktop-footer {
+                display: block;
+            }
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 220px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 280px;
+            }
+        }
+        
+        /* Status Pulse */
+        .status-pulse {
+            position: relative;
+        }
+        
+        .status-pulse::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.4);
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        
+        /* Compact Header Elements */
+        .compact-logo {
+            width: 36px;
+            height: 36px;
+        }
+        
+        @media (min-width: 1024px) {
+            .compact-logo {
+                width: 44px;
+                height: 44px;
+            }
+        }
+        
+        /* Quick Ride Button - FIXED to match image */
+        .quick-ride-btn {
+            background: linear-gradient(135deg, #FCC21B 0%, #FFD700 100%);
+            color: #000;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(252, 194, 27, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .quick-ride-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(252, 194, 27, 0.4);
+        }
+        
+        .quick-ride-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* About Us Dropdown - FIXED */
+        .about-dropdown {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        
+        .about-dropdown-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .about-icon {
+            width: 20px;
+            height: 20px;
+            color: #FCC21B;
+        }
+        
+        /* Animation for slide up */
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        /* Safe area support for notched devices */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .mobile-bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <!-- Navigation Header - COMPACT FOR MOBILE -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-solid header-mobile">
+        <nav class="container mx-auto px-3 lg:px-8 h-full">
+            <div class="flex items-center justify-between h-full">
+                <!-- Left: Menu + Logo -->
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors -ml-1">
+                        <i data-lucide="menu" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                    
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="compact-logo bg-[#FCC21B] rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300 shadow-md">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Rapido_%28company%29.svg/1280px-Rapido_%28company%29.svg.png" 
+                                 alt="Rapido Logo" 
+                                 class="w-7 h-7 lg:w-9 lg:h-9 object-contain">
+                        </div>
+                        <span class="text-lg lg:text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">rapido</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1">
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-3 py-2 text-sm" onclick="toggleDropdown('home-dropdown')">
+                            Home
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="home-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="home" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>Homepage 1</span>
+                            </a>
+                            <a href="home.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="home" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>Homepage 2</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="service.html" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-3 py-2 text-sm">Services</a>
+                    
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-3 py-2 text-sm" onclick="toggleDropdown('about-dropdown')">
+                            About Us
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="about.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="info" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>About Us</span>
+                            </a>
+                            <a href="careers.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="briefcase" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>Careers</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-3 py-2 text-sm" onclick="toggleDropdown('safety-dropdown')">
+                            Safety
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="safety.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>Safety Features</span>
+                            </a>
+                            <a href="insurance.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="shield" class="w-4 h-4 text-[#FCC21B]"></i>
+                                <span>Insurance</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <!-- Online Toggle - Desktop -->
+                    <div class="hidden md:flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1.5">
+                        <span class="text-xs font-medium text-gray-700" id="status-text">Offline</span>
+                        <div class="toggle-switch" id="online-toggle" onclick="toggleOnlineStatus()"></div>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <button class="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-700"></i>
+                        <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center font-bold">3</span>
+                    </button>
+                    
+                    <!-- Profile Dropdown - Desktop -->
+                    <div class="relative group hidden md:block">
+                        <button class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 lg:w-10 lg:h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                <i data-lucide="user" class="w-4 h-4 lg:w-5 lg:h-5 text-black"></i>
+                            </div>
+                        </button>
+                        
+                        <div class="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 hidden group-hover:block z-50">
+                            <div class="px-4 py-2 border-b border-gray-100">
+                                <p class="font-bold text-gray-900 text-sm">Ramesh Kumar</p>
+                                <p class="text-xs text-gray-500">ID: RP784521</p>
+                            </div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="user" class="w-4 h-4 text-[#FCC21B]"></i>
+                                Profile
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FCC21B]/10 transition-colors">
+                                <i data-lucide="settings" class="w-4 h-4 text-[#FCC21B]"></i>
+                                Settings
+                            </a>
+                            <div class="border-t border-gray-100 mt-1 pt-1">
+                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden bg-[#FCC21B] text-black p-2 rounded-lg hover:bg-[#e5b100] transition-colors shadow-md">
+                        <i data-lucide="menu" class="w-5 h-5" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu - COMPACT -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="flex flex-col p-4 space-y-1">
+                <!-- Captain Profile -->
+                <div class="flex items-center gap-3 pb-4 border-b border-gray-200 mb-3">
+                    <div class="w-12 h-12 bg-[#FCC21B] rounded-full flex items-center justify-center relative">
+                        <i data-lucide="user" class="w-6 h-6 text-black"></i>
+                        <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-sm">Ramesh Kumar</h3>
+                        <p class="text-xs text-gray-500">ID: RP784521</p>
+                        <div class="flex items-center gap-1 mt-0.5">
+                            <i data-lucide="star" class="w-3 h-3 text-[#FCC21B] fill-current"></i>
+                            <span class="text-xs font-semibold">4.8 Rating</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Online Toggle -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                            <i data-lucide="power" class="w-4 h-4 text-[#FCC21B]"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">Go Online</p>
+                            <p class="text-xs text-gray-500">Start accepting rides</p>
+                        </div>
+                    </div>
+                    <div class="toggle-switch" id="mobile-online-toggle" onclick="toggleMobileOnline()"></div>
+                </div>
+
+                <!-- Dashboard Link -->
+                <a href="dashboard.html" onclick="closeMobileMenu()" class="text-base font-bold text-[#FCC21B] py-3 border-b border-gray-200 flex items-center gap-3 px-2">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 text-[#FCC21B]"></i>
+                    Dashboard
+                </a>
+                
+                <!-- Earnings Link -->
+                <a href="#" onclick="closeMobileMenu()" class="text-base font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 border-b border-gray-200 flex items-center gap-3 px-2">
+                    <i data-lucide="wallet" class="w-5 h-5 text-[#FCC21B]"></i>
+                    Earnings
+                    <span class="ml-auto bg-[#FCC21B] text-black text-xs font-bold px-2 py-0.5 rounded-full">₹2,450</span>
+                </a>
+                
+                <!-- Trips Link -->
+                <a href="#" onclick="closeMobileMenu()" class="text-base font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 border-b border-gray-200 flex items-center gap-3 px-2">
+                    <i data-lucide="bike" class="w-5 h-5 text-[#FCC21B]"></i>
+                    My Trips
+                    <span class="ml-auto bg-gray-100 text-gray-600 text-xs font-bold px-2 py-0.5 rounded-full">12</span>
+                </a>
+
+                <!-- Home Dropdown -->
+                <div class="border-b border-gray-200 py-1">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-base font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-2">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                            Home
+                        </span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
+                    </button>
+                    <div id="mobile-home" class="hidden pl-10 space-y-1 py-1">
+                        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            Homepage 1
+                        </a>
+                        <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            Homepage 2
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- About Dropdown -->
+                <div class="border-b border-gray-200 py-1">
+                    <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-base font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-2">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
+                            About Us
+                        </span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-600 transition-transform duration-300" id="mobile-about-icon"></i>
+                    </button>
+                    <div id="mobile-about" class="hidden pl-10 space-y-1 py-1">
+                        <a href="about.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            About Us
+                        </a>
+                        <a href="careers.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            Careers
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Safety Dropdown -->
+                <div class="border-b border-gray-200 py-1">
+                    <button onclick="toggleMobileDropdown('mobile-safety')" class="w-full text-left text-base font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-2">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                            Safety
+                        </span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-600 transition-transform duration-300" id="mobile-safety-icon"></i>
+                    </button>
+                    <div id="mobile-safety" class="hidden pl-10 space-y-1 py-1">
+                        <a href="safety.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            Safety Features
+                        </a>
+                        <a href="insurance.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-2 hover:text-[#FCC21B] transition-colors text-sm">
+                            Insurance
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="pt-3 pb-2">
+                    <p class="text-xs text-gray-500 mb-2 px-2 uppercase tracking-wider font-semibold">Today's Performance</p>
+                    <div class="grid grid-cols-3 gap-2 px-2">
+                        <div class="bg-gray-50 rounded-lg p-2 text-center">
+                            <p class="font-bold text-gray-900 text-sm">12</p>
+                            <p class="text-xs text-gray-500">Trips</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-2 text-center">
+                            <p class="font-bold text-gray-900 text-sm">6.5h</p>
+                            <p class="text-xs text-gray-500">Online</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-2 text-center">
+                            <p class="font-bold text-green-600 text-sm">92%</p>
+                            <p class="text-xs text-gray-500">Accept</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Support -->
+                <div class="pt-4 space-y-2">
+                    <button onclick="closeMobileMenu()" class="btn-primary w-full bg-[#FCC21B] text-black py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        Emergency Support
+                    </button>
+                </div>
+                
+                <!-- Contact -->
+                <div class="pt-4 mt-2 border-t border-gray-200">
+                    <p class="text-xs text-gray-500 mb-1 px-2">Need help?</p>
+                    <a href="tel:080-XXXXXXX" class="text-base font-bold text-[#FCC21B] flex items-center gap-2 px-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        080-XXXXXXX
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay lg:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="pt-14 lg:pt-[72px] flex min-h-screen pb-20 lg:pb-0">
+        
+        <!-- Sidebar -->
+        <aside id="dashboard-sidebar" class="dashboard-sidebar">
+            <div class="p-4">
+                <!-- Captain Info -->
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                    <div class="w-11 h-11 bg-[#FCC21B] rounded-full flex items-center justify-center relative">
+                        <i data-lucide="user" class="w-5 h-5 text-black"></i>
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full status-pulse"></div>
+                    </div>
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-gray-900 text-sm truncate">Ramesh K.</h3>
+                        <div class="flex items-center gap-1 text-xs text-gray-500">
+                            <i data-lucide="star" class="w-3 h-3 text-[#FCC21B] fill-current"></i>
+                            <span>4.8</span>
+                            <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
+                            <span class="truncate">Gold Captain</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="space-y-0.5">
+                    <a href="#" class="sidebar-link active flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        Earnings
+                        <span class="ml-auto bg-[#FCC21B] text-black text-xs font-bold px-2 py-0.5 rounded-full">₹2,450</span>
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="bike" class="w-4 h-4"></i>
+                        My Trips
+                        <span class="ml-auto bg-gray-100 text-gray-600 text-xs font-bold px-2 py-0.5 rounded-full">12</span>
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        Navigation
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        Safety
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="gift" class="w-4 h-4"></i>
+                        Rewards
+                        <span class="ml-auto bg-purple-100 text-purple-600 text-xs font-bold px-2 py-0.5 rounded-full">850</span>
+                    </a>
+                    <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 font-medium text-sm">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        Refer & Earn
+                    </a>
+                </nav>
+
+                <!-- Safety Status -->
+                <div class="mt-5 p-3 bg-green-50 rounded-xl border border-green-100">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-green-600"></i>
+                        <span class="font-semibold text-green-800 text-xs">Safety Score</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-green-200 rounded-full h-1.5">
+                            <div class="bg-green-600 h-1.5 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <span class="text-xs font-bold text-green-700">95%</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-6 w-full min-w-0">
+            
+            <!-- About Us Dropdown - FIXED POSITION -->
+            <div class="about-dropdown" data-aos="fade-up">
+                <div class="about-dropdown-left">
+                    <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                        <i data-lucide="info" class="about-icon"></i>
+                    </div>
+                    <span class="font-semibold text-gray-900 text-base">About Us</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+            </div>
+
+            <!-- Quick Ride Button - FIXED -->
+            <button class="quick-ride-btn" data-aos="fade-up" data-aos-delay="50">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                Quick Ride
+            </button>
+
+            <!-- Stats Grid - FIXED TO MATCH IMAGE EXACTLY -->
+            <div class="grid grid-cols-2 gap-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Today's Earnings -->
+                <div class="dashboard-card">
+                    <span class="stat-badge text-green-600 bg-green-50">+12%</span>
+                    <div class="stat-icon-box bg-yellow-50">
+                        <i data-lucide="wallet" class="w-5 h-5 text-[#FCC21B]"></i>
+                    </div>
+                    <p class="stat-label">Today's Earnings</p>
+                    <p class="stat-value">₹2,450</p>
+                </div>
+
+                <!-- Total Trips -->
+                <div class="dashboard-card">
+                    <span class="stat-badge text-blue-600 bg-blue-50">+5</span>
+                    <div class="stat-icon-box bg-blue-50">
+                        <i data-lucide="bike" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <p class="stat-label">Total Trips</p>
+                    <p class="stat-value">12</p>
+                </div>
+
+                <!-- Online Hours -->
+                <div class="dashboard-card">
+                    <span class="stat-badge text-purple-600 bg-purple-50">Active</span>
+                    <div class="stat-icon-box bg-purple-50">
+                        <i data-lucide="clock" class="w-5 h-5 text-purple-500"></i>
+                    </div>
+                    <p class="stat-label">Online Hours</p>
+                    <p class="stat-value">6.5</p>
+                </div>
+
+                <!-- Rating -->
+                <div class="dashboard-card">
+                    <span class="stat-badge text-orange-600 bg-orange-50">Top 5%</span>
+                    <div class="stat-icon-box bg-orange-50">
+                        <i data-lucide="star" class="w-5 h-5 text-orange-500"></i>
+                    </div>
+                    <p class="stat-label">Rating</p>
+                    <p class="stat-value">4.8</p>
+                </div>
+            </div>
+
+            <!-- Earnings Overview Section -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100" data-aos="fade-up" data-aos-delay="150">
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold text-gray-900">Earnings Overview</h3>
+                    <p class="text-sm text-gray-500">Weekly performance</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="earningsChart"></canvas>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================
+         FIXED MOBILE BOTTOM NAVIGATION - TALLER
+         ============================================ -->
+    <nav class="mobile-bottom-nav">
+        <!-- Home -->
+        <a href="#" class="bottom-nav-item active">
+            <div class="icon-container">
+                <i data-lucide="layout-dashboard"></i>
+            </div>
+            <span>Home</span>
+        </a>
+        
+        <!-- Earnings -->
+        <a href="#" class="bottom-nav-item">
+            <div class="icon-container">
+                <i data-lucide="wallet"></i>
+            </div>
+            <span>Earnings</span>
+        </a>
+        
+        <!-- POWER BUTTON - CENTER (Larger) -->
+        <div class="bottom-nav-power" onclick="toggleOnlineStatus()">
+            <button class="power-button" aria-label="Toggle Online Status">
+                <i data-lucide="power"></i>
+            </button>
+        </div>
+        
+        <!-- Trips -->
+        <a href="#" class="bottom-nav-item">
+            <div class="icon-container">
+                <i data-lucide="bike"></i>
+            </div>
+            <span>Trips</span>
+        </a>
+        
+        <!-- Profile -->
+        <a href="#" class="bottom-nav-item">
+            <div class="icon-container">
+                <i data-lucide="user"></i>
+            </div>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- MOBILE FOOTER -->
+    <footer class="mobile-footer">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h3 class="font-bold text-sm mb-3 text-[#FCC21B]">Captain</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Dashboard</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Earnings</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Trips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Rewards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-sm mb-3 text-[#FCC21B]">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Safety</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-xs">Emergency</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-4">
+                <div class="flex justify-center gap-4 mb-4">
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-500 text-xs">© 2024 Rapido. All rights reserved.</p>
+                    <p class="text-gray-600 text-[10px] mt-1">Captain Dashboard v2.0</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DESKTOP FOOTER -->
+    <footer class="desktop-footer bg-black text-white py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">About us</a></li>
+                        <li><a href="service.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Our offerings</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Newsroom</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Investors</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Blog</a></li>
+                        <li><a href="careers.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Products</h3>
+                    <ul class="space-y-3">
+                        <li><a href="service.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Ride</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Drive</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Eat</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Rapido for Business</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Rapido Freight</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Gift cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Global citizenship</h3>
+                    <ul class="space-y-3">
+                        <li><a href="safety.html" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Safety</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Sustainability</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[#FCC21B]">Travel</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Reserve</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Airports</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors hover:translate-x-1 inline-block text-sm">Cities</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 gap-4">
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition-all hover:scale-110">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        English
+                    </button>
+                    <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        Coimbatore
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 text-gray-500 text-xs">
+                © 2024 Rapido. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ride Request Modal -->
+    <div id="ride-request-modal" class="fixed inset-0 bg-black/50 z-[9999] hidden items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white rounded-t-2xl sm:rounded-2xl p-5 w-full sm:max-w-md sm:w-full animate-slide-up">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">New Ride Request!</h3>
+                <span class="bg-[#FCC21B] text-black px-2 py-0.5 rounded-full text-xs font-bold animate-pulse">2.5x</span>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                        <i data-lucide="user" class="w-5 h-5 text-black"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-900 text-sm">Priya Sharma</p>
+                        <div class="flex items-center gap-1 text-xs text-gray-500">
+                            <i data-lucide="star" class="w-3 h-3 text-[#FCC21B] fill-current"></i>
+                            <span>4.9</span>
+                            <span>•</span>
+                            <span>Cash</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-1.5 mb-3 text-xs">
+                    <div class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 bg-green-500 rounded-full mt-1"></div>
+                        <p class="text-gray-600">Koramangala 5th Block, Bangalore</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 bg-red-500 rounded-full mt-1"></div>
+                        <p class="text-gray-600">HSR Layout Sector 7, Bangalore</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between text-xs border-t pt-3">
+                    <div>
+                        <p class="text-gray-500">Distance</p>
+                        <p class="font-bold">5.2 km</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Time</p>
+                        <p class="font-bold">18 mins</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Fare</p>
+                        <p class="font-bold text-[#FCC21B] text-base">₹145</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="hideRideRequest()" class="py-2.5 rounded-xl font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors text-sm">
+                    Decline
+                </button>
+                <button onclick="hideRideRequest()" class="py-2.5 rounded-xl font-bold text-black bg-[#FCC21B] hover:bg-[#e5b100] transition-colors text-sm">
+                    Accept Ride
+                </button>
+            </div>
+            
+            <p class="text-center text-xs text-gray-400 mt-3">Auto-decline in 15 seconds</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Initialize AOS
+        AOS.init({
+            duration: 600,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 30
+        });
+        
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('dashboard-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                menu.classList.add('active');
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.remove('active');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            
+            document.querySelectorAll('.dropdown-menu').forEach(d => {
+                d.classList.add('hidden');
+                d.classList.remove('active');
+            });
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.add('active'), 10);
+            }
+        }
+        
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.group')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => {
+                    d.classList.add('hidden');
+                    d.classList.remove('active');
+                });
+            }
+        });
+        
+        // Online Status Toggle
+        function toggleOnlineStatus() {
+            const toggle = document.getElementById('online-toggle');
+            const statusText = document.getElementById('status-text');
+            
+            if (toggle) {
+                toggle.classList.toggle('active');
+                
+                if (toggle.classList.contains('active')) {
+                    if (statusText) {
+                        statusText.textContent = 'Online';
+                        statusText.classList.add('text-green-600');
+                        statusText.classList.remove('text-gray-700');
+                    }
+                    setTimeout(() => showRideRequest(), 2000);
+                } else {
+                    if (statusText) {
+                        statusText.textContent = 'Offline';
+                        statusText.classList.remove('text-green-600');
+                        statusText.classList.add('text-gray-700');
+                    }
+                }
+            }
+        }
+        
+        // Mobile Online Toggle
+        function toggleMobileOnline() {
+            const toggle = document.getElementById('mobile-online-toggle');
+            toggle.classList.toggle('active');
+            
+            if (toggle.classList.contains('active')) {
+                setTimeout(() => showRideRequest(), 2000);
+            }
+        }
+        
+        // Ride Request Modal
+        function showRideRequest() {
+            const modal = document.getElementById('ride-request-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function hideRideRequest() {
+            const modal = document.getElementById('ride-request-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        // Earnings Chart
+        const ctx = document.getElementById('earningsChart').getContext('2d');
+        const earningsChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Earnings (₹)',
+                    data: [1850, 2100, 1950, 2450, 2800, 3200, 2450],
+                    borderColor: '#FCC21B',
+                    backgroundColor: 'rgba(252, 194, 27, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#FCC21B',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 3,
+                    pointHoverRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 8,
+                        cornerRadius: 6,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '₹' + context.parsed.y;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value;
+                            },
+                            font: {
+                                family: 'Inter',
+                                size: 10
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                family: 'Inter',
+                                size: 10
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 30) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
