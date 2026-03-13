@@ -1309,14 +1309,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             padding: 80px 60px 40px;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            max-width: 1400px;
-            margin: 0 auto 60px;
-        }
+       .footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:40px;
+max-width:1200px;
+margin:0 auto 60px;
+text-align:center;
+}
+.footer-brand{
+text-align:center;
+}
 
+.footer-brand .logo-container{
+justify-content:center;
+margin-bottom:15px;
+}
+.social-links{
+display:flex;
+justify-content:center;
+gap:16px;
+}
         .footer-brand .logo-text {
             color: white;
             -webkit-text-fill-color: white;
@@ -1381,17 +1394,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             transform: translateX(5px);
         }
 
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            color: var(--gray-400);
-            font-size: 14px;
-        }
+       .footer-bottom{
+border-top:1px solid rgba(255,255,255,0.1);
+padding-top:40px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:15px;
+text-align:center;
+max-width:1200px;
+margin:0 auto;
+}
 
         /* Animations on Scroll */
         .fade-in {
