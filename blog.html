@@ -1405,6 +1405,128 @@
                 text-align: center;
             }
         }
+
+/* GLOBAL FIX */
+*{
+max-width:100%;
+}
+
+html,body{
+overflow-x:hidden;
+}
+
+/* IMAGES FIX */
+img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+/* FEATURED GRID MOBILE */
+@media (max-width:768px){
+
+.featured-grid{
+grid-template-columns:1fr;
+gap:20px;
+}
+
+.side-posts{
+width:100%;
+}
+
+.side-card{
+flex-direction:row;
+width:100%;
+}
+
+}
+
+/* BLOG GRID MOBILE */
+@media (max-width:768px){
+
+.blog-grid{
+grid-template-columns:1fr;
+gap:20px;
+}
+
+}
+
+/* HERO TEXT FIX */
+@media (max-width:768px){
+
+.blog-hero h1{
+font-size:32px;
+line-height:1.2;
+letter-spacing:-1px;
+}
+
+.blog-hero p{
+font-size:16px;
+}
+
+}
+
+/* SEARCH BAR FIX */
+@media (max-width:768px){
+
+.search-input{
+padding:16px 50px 16px 18px;
+font-size:14px;
+}
+
+}
+
+/* CATEGORY SCROLL MOBILE */
+@media (max-width:768px){
+
+.categories-container{
+flex-wrap:nowrap;
+overflow-x:auto;
+padding-bottom:10px;
+}
+
+.category-btn{
+white-space:nowrap;
+}
+
+}
+
+/* NEWSLETTER FIX */
+@media (max-width:768px){
+
+.newsletter-form{
+flex-direction:column;
+gap:12px;
+}
+
+.newsletter-input,
+.newsletter-btn{
+width:100%;
+}
+
+}
+
+/* FOOTER FIX */
+@media (max-width:768px){
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:30px;
+}
+
+}
+
+/* SIDE IMAGE FIX */
+.side-image{
+width:80px;
+height:80px;
+}
+
+
+
+
+
+
     </style>
 <base target="_blank">
 </head>
@@ -1652,8 +1774,7 @@
             <div class="featured-grid">
                 <article class="featured-card fade-in">
                     <div class="featured-image">
-                        <img src="homeimg2" alt="Remote Work">
-                    </div>
+<img src="homeimg2.webp" alt="Remote Work">                    </div>
                     <span class="featured-badge">Featured</span>
                     <div class="featured-content">
                         <div class="featured-meta">

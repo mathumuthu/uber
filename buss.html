@@ -1158,6 +1158,153 @@
                 text-align: center;
             }
         }
+
+
+
+
+/* GLOBAL MOBILE FIX */
+html,body{
+overflow-x:hidden;
+}
+
+*{
+max-width:100%;
+}
+
+/* IMAGE FIX */
+img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+/* HEADER FIX */
+@media (max-width:768px){
+
+.header{
+padding:0 20px;
+}
+
+}
+
+/* HERO FIX */
+@media (max-width:768px){
+
+.business-hero{
+padding:120px 20px 60px;
+min-height:auto;
+}
+
+.business-hero-grid{
+grid-template-columns:1fr;
+gap:40px;
+}
+
+.business-hero h1{
+font-size:32px;
+line-height:1.2;
+letter-spacing:-1px;
+}
+
+.business-hero p{
+font-size:16px;
+}
+
+}
+
+/* STATS MOBILE */
+@media (max-width:768px){
+
+.business-stats{
+flex-direction:column;
+gap:20px;
+}
+
+}
+
+/* DASHBOARD FIX */
+@media (max-width:768px){
+
+.dashboard-mockup{
+width:100%;
+padding:20px;
+}
+
+.dashboard-stats{
+grid-template-columns:1fr;
+gap:10px;
+}
+
+}
+
+/* SOLUTIONS GRID FIX */
+@media (max-width:768px){
+
+.solutions-grid{
+grid-template-columns:1fr;
+gap:20px;
+}
+
+}
+
+/* FEATURES FIX */
+@media (max-width:768px){
+
+.feature-block{
+flex-direction:column;
+text-align:left;
+}
+
+}
+
+/* CTA FIX */
+@media (max-width:768px){
+
+.cta-buttons{
+flex-direction:column;
+}
+
+.btn-white,
+.btn-outline-white{
+width:100%;
+justify-content:center;
+}
+
+}
+
+/* FOOTER FIX */
+@media (max-width:768px){
+
+.footer-grid{
+grid-template-columns:1fr;
+}
+
+.footer-bottom{
+flex-direction:column;
+gap:10px;
+}
+
+}
+
+
+section{
+padding:120px 60px;
+}
+
+@media (max-width:768px){
+section{
+padding:80px 20px;
+}
+}
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body>

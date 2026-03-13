@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapido - Bharat Moves On Rapido!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">    <title>Rapido - Bharat Moves On Rapido!</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -96,13 +95,17 @@
         }
         
         /* Hero Background */
-        .hero-bg {
-            background-image: url('homeimg2.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
+      .hero-bg {
+    background-image: url('homeimg2.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width:768px){
+    .hero-bg{
+        background-attachment: scroll;
+    }
+}
         .hero-overlay {
             background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(252,194,27,0.2) 100%);
         }
@@ -263,13 +266,54 @@
         .mobile-menu i {
             color: #FCC21B !important;
         }
+
+
+.container {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+input,textarea,select{
+font-size:16px;
+}
+
+
+.mobile-menu{
+z-index:99999;
+}
+
+
+@media (max-width: 768px){
+
+#navbar{
+background:#ffffff;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+}
+
+
+
     </style>
 </head>
 <body class="bg-white overflow-x-hidden">
 
     <!-- Navigation Header -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent">        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <!-- Logo with Image -->
                 <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
@@ -279,8 +323,7 @@
                                  alt="Rapido Logo" 
                                  class="w-14 h-14 object-contain">
                         </div>
-                        <span class="text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">Stackly</span>
-                    </a>
+<span class="text-xl font-bold text-gray-900">Stackly</span>                    </a>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -375,10 +418,10 @@
                         </div> -->
                     </div>
                 </div>
-               <a href="contact.html"> <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('more-dropdown')">
-                          Contact Us
+               <!-- <a href="contact.html"> <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('more-dropdown')">
+                          Contact Us -->
                             <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        </button></a>
+                        <!-- </button></a> -->
                 <!-- Desktop CTA -->
                 <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
                 <a href="login.html"><button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>    
@@ -514,8 +557,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg">
-        <div class="absolute inset-0 hero-overlay"></div>
+<section id="home" class="pt-24 relative min-h-[90vh] flex items-center justify-center overflow-hidden hero-bg">     <div class="absolute inset-0 hero-overlay"></div>
         
         <div class="absolute top-20 left-10 w-72 h-72 bg-[#FCC21B]/20 rounded-full float-animation blur-3xl"></div>
         <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation-reverse blur-3xl"></div>
@@ -557,8 +599,9 @@
                     </div>
                     
                     <button class="btn-primary w-full bg-[#FCC21B] text-black font-bold text-xl py-4 rounded-xl pulse-glow shimmer-effect flex items-center justify-center gap-3 group" data-aos="zoom-in" data-aos-delay="600">
-                      <a href="book-ride.html"></a>  <span>Book Ride</span>
-                        <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+<a href="book-ride.html" class="btn-primary w-full bg-[#FCC21B] text-black font-bold text-xl py-4 rounded-xl pulse-glow shimmer-effect flex items-center justify-center gap-3">
+Book Ride
+</a>                        <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </div>
                 

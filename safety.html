@@ -262,13 +262,193 @@
             background: linear-gradient(135deg, #FCC21B 0%, #ffd700 100%);
             box-shadow: 0 10px 30px -10px rgba(252, 194, 27, 0.5);
         }
+
+
+        @media (max-width: 768px){
+
+#navbar{
+background:#ffffff;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+}
+
+
+
+
+/* =========================
+   GLOBAL MOBILE FIXES
+========================= */
+
+/* Prevent horizontal scroll */
+html,body{
+overflow-x:hidden;
+}
+
+/* Container padding for small screens */
+@media (max-width:640px){
+.container{
+padding-left:16px;
+padding-right:16px;
+}
+}
+
+/* =========================
+   HERO SECTION MOBILE
+========================= */
+
+@media (max-width:768px){
+
+#home{
+padding-top:90px;
+min-height:auto;
+}
+
+#home h1{
+font-size:32px;
+line-height:1.2;
+}
+
+#home p{
+font-size:15px;
+}
+
+}
+
+/* =========================
+   SAFETY STATS GRID
+========================= */
+
+@media (max-width:640px){
+
+.grid.grid-cols-2.md\:grid-cols-4{
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.grid.grid-cols-2.md\:grid-cols-4 div{
+padding:12px;
+}
+
+}
+
+/* =========================
+   CARD RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.safety-card{
+padding:20px;
+}
+
+.feature-card{
+padding:20px;
+}
+
+}
+
+/* =========================
+   SECTION SPACING MOBILE
+========================= */
+
+@media (max-width:768px){
+
+section{
+padding-top:60px !important;
+padding-bottom:60px !important;
+}
+
+}
+
+/* =========================
+   TIMELINE MOBILE FIX
+========================= */
+
+@media (max-width:768px){
+
+.timeline-line{
+left:18px;
+}
+
+.timeline-dot{
+left:18px;
+}
+
+.timeline-dot + div{
+margin-left:50px;
+}
+
+}
+
+/* =========================
+   CTA BUTTON MOBILE
+========================= */
+
+@media (max-width:640px){
+
+.btn-primary{
+width:100%;
+justify-content:center;
+}
+
+}
+
+/* =========================
+   FOOTER MOBILE
+========================= */
+
+@media (max-width:768px){
+
+footer .grid{
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+}
+
+@media (max-width:480px){
+
+footer .grid{
+grid-template-columns:1fr;
+}
+
+footer ul li{
+font-size:14px;
+}
+
+}
+
+/* =========================
+   MOBILE MENU HEIGHT FIX
+========================= */
+
+@media (max-width:768px){
+
+.mobile-menu{
+top:64px;
+height:calc(100vh - 64px);
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body class="bg-white overflow-x-hidden">
 
     <!-- Navigation Header -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent">        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
@@ -278,8 +458,7 @@
                                  alt="Rapido Logo" 
                                  class="w-13 h-13 object-contain">
                         </div>
-                        <span class="text-2xl font-bold text-gray-900 hidden sm:block group-hover:text-[#FCC21B] transition-colors">Stackly</span>
-                    </a>
+<span class="text-xl font-bold text-gray-900">Stackly</span>                    </a>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -458,8 +637,8 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 bg-gray-50 hero-pattern overflow-hidden">
-        <div class="absolute top-20 right-10 w-72 h-72 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl"></div>
+<section id="home" class="pt-24 relative min-h-[90vh] flex items-center justify-center overflow-hidden hero-bg">       
+     <div class="absolute top-20 right-10 w-72 h-72 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl"></div>
         <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl" style="animation-delay: 2s;"></div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
