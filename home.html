@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -75,6 +77,27 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:20px;
+}
+
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+}
+
+.logo-img{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.logo-text{
+    font-size:26px;
+    font-weight:800;
+    line-height:1;
 }
 
 .nav-container{
@@ -1615,6 +1638,60 @@
             90% { opacity: 1; }
             100% { transform: translate(100px, -100px); opacity: 0; }
         }
+
+
+
+
+
+
+.social-link{
+width:44px;
+height:44px;
+background:rgba(255,255,255,0.1);
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+color:white;
+font-size:18px;
+transition:all 0.3s;
+}
+
+.social-link:hover{
+background:var(--gradient-1);
+transform:translateY(-3px);
+}
+
+
+
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+}
+
+.logo-img{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+}
+
+.logo-text{
+    font-size:26px;
+    font-weight:800;
+    line-height:1;
+}
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -2127,17 +2204,17 @@
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                    <img src="logo.webp" style="width: 40px; height: 40px; border-radius: 10px;" alt="Logo">
-                    <span class="logo-text" style="font-size: 24px;">Stackly</span>
-                </div>
+                <div class="logo-container">
+    <img src="logo.webp" alt="RideGo Logo" class="logo-img">
+    <span class="logo-text">STACKLY</span>
+</div>
                 <p>Moving the world forward, one ride at a time. Safe, reliable, and affordable transportation for everyone, everywhere.</p>
-                <div class="social-links">
-                    <a href="eror.html" class="social-link">📘</a>
-                    <a href="eror.html" class="social-link">🐦</a>
-                    <a href="eror.html" class="social-link">📸</a>
-                    <a href="eror.html" class="social-link">💼</a>
-                </div>
+               <div class="social-links">
+<a href="eror.html" class="social-link"><i class="fab fa-facebook-f"></i></a>
+<a href="eror.html" class="social-link"><i class="fab fa-twitter"></i></a>
+<a href="eror.html" class="social-link"><i class="fab fa-instagram"></i></a>
+<a href="eror.html" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+</div>
             </div>
 
             <div class="footer-column">
