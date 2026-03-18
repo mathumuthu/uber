@@ -304,7 +304,19 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="mobile-menu lg:hidden">
-            <div class="flex flex-col p-6 space-y-1">
+
+    <!-- ✅ TOP HEADER (FIXED) -->
+    <div class="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-white sticky top-0 z-50">
+        <h2 class="text-lg font-bold text-gray-900">Menu</h2>
+
+        <!-- CLOSE BUTTON -->
+        <button onclick="closeMobileMenu()" class="p-2 rounded-lg hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-7 h-7 text-gray-800"></i>
+        </button>
+    </div>
+
+    <!-- ✅ MENU CONTENT -->
+    <div class="flex flex-col p-6 space-y-1">
                 <!-- Home Dropdown -->
                 <div class="border-b border-gray-200 py-2">
                     <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
