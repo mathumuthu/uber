@@ -152,29 +152,10 @@
             transform: translateX(0);
         }
         
-        /* Dropdown Animation */
-        .dropdown-menu {
-            transform-origin: top;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .dropdown-menu.hidden {
-            transform: scaleY(0);
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .dropdown-menu.active {
-            transform: scaleY(1);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
         /* Image Hover Effects */
         .image-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            position: relative;
+overflow: visible;            position: relative;
         }
         .image-card:hover {
             transform: translateY(-10px) scale(1.02);
@@ -224,7 +205,14 @@
         .nav-link:hover::after {
             width: 100%;
         }
-        
+
+
+
+
+
+
+
+
         /* Testimonial Card */
         .testimonial-card {
             background: white;
@@ -275,7 +263,6 @@
 
 
 
-
 html, body {
     width: 100%;
     overflow-x: hidden;
@@ -307,8 +294,64 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
 
+#home{
+    overflow: visible !important;
+}
+    
+        /* ===== CLEAN DROPDOWN CSS ===== */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            transform-origin: top center;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scaleY(0);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .dropdown-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Desktop hover dropdown */
+        @media (min-width: 1024px) {
+            .group:hover > .dropdown-menu,
+            .nav-item:hover > .dropdown-menu {
+                transform: scaleY(1) !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 1023px) {
+            .dropdown-menu {
+                position: static !important;
+                width: 100% !important;
+                transform: scaleY(0);
+            }
+        }
+
+#home{
+    overflow: visible !important;
+}
+
+#navbar{
+    overflow: visible !important;
+}
+
+nav{
+    overflow: visible !important;
+}
 
     </style>
+<!-- <base target="_blank"> -->
 </head>
 <body class="bg-white overflow-x-hidden">
 
@@ -317,7 +360,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <!-- Logo with Image -->
                 <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
-                    <a href="#home" class="flex items-center gap-2 group">
+                    <a href="index.html" class="flex items-center gap-2 group">
                         <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <img src="logo.webp" 
                                  alt="Rapido Logo" 
@@ -326,102 +369,43 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
 <span class="text-xl font-bold text-gray-900">Stackly</span>                    </a>
                 </div>
 
-                <!-- Desktop Navigation -->
+                <!-- Desktop Navigation with Dropdowns -->
                 <div class="hidden lg:flex items-center space-x-1" data-aos="fade-down" data-aos-duration="800" data-aos-delay="200">
-                    <!-- <a href="#home" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-4 py-2">Home</a> -->
-                    
-                    <!-- Dropdown for Services -->
-                    <div class="relative group px-2">
-                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('services-dropdown')">
+                    <!-- Home Dropdown -->
+                    <div class="relative group nav-item px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('home-dropdown')">
                             Home
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
                         </button>
-                        <div id="services-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                        <div id="home-dropdown" class="dropdown-menu absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
                             <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
                             <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="bike" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
                                 <span>Homepage 1</span>
                             </a>
                             <a href="home.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="car" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
                                 <span>Homepage 2</span>
                             </a>
-                            <!-- <a href="#services" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="users" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Auto Share</span>
-                            </a>
-                            <a href="#services" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="package" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Parcel</span>
-                            </a>
-                            <a href="#services" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="car-front" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Cab Economy</span>
-                            </a>
-                            <a href="#services" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="sparkles" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Cab Premium</span>
-                            </a> -->
                         </div>
                     </div>
 
                     <a href="service.html" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-4 py-2">Services</a>
                     
-                    <!-- Dropdown for Captain -->
+                    <!-- About Dropdown -->
                     <div class="relative group px-2">
-                     <a href="About.html"> <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('captain-dropdown')">
+                        <a href="About.html"><button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
                             About Us
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
                         </button></a>
-                        <div id="captain-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <!-- <a href="#captain" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="wallet" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Earnings</span>
-                            </a>
-                            <a href="#captain" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Insurance</span>
-                            </a>
-                            <a href="#captain" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="clock" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Flexible Hours</span>
-                            </a> -->
-                        </div>
                     </div>
                     
-                    <!-- Dropdown for More -->
+                    <!-- Safety Dropdown -->
                     <div class="relative group px-2">
-                       <a href="safety.html"> <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('more-dropdown')">
+                        <a href="safety.html"><button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
                             Safety
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
                         </button></a>
-
-          
-
-
-
-                        <!-- <div id="more-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <a href="#safety" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Safety</span>
-                            </a>
-                            <a href="#testimonials" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="message-circle" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Testimonials</span>
-                            </a>
-                            <a href="#contact" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="phone" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Contact Us</span>
-                            </a>
-                        </div> -->
                     </div>
                 </div>
-               <!-- <a href="contact.html"> <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('more-dropdown')">
-                          Contact Us -->
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        <!-- </button></a> -->
                 <!-- Desktop CTA -->
                 <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
                 <a href="login.html"><button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>    
@@ -443,67 +427,40 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
         <!-- Mobile Menu - FULLY VISIBLE WITH SOLID BACKGROUND -->
         <div id="mobile-menu" class="mobile-menu lg:hidden">
             <div class="flex flex-col p-6 space-y-1">
-                <!-- Home -->
-                <!-- <a href="#home" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 bg-gray-50/50 rounded-lg px-3 mb-2">
-                    <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
-                    Home
-                </a>
-                 -->
-                <!-- Services Dropdown -->
+                <!-- Home Dropdown -->
                 <div class="border-b border-gray-200 py-2">
-                    <button onclick="toggleMobileDropdown('mobile-services')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
                         <span class="flex items-center gap-3">
-                            <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
+                            <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
                             Home
                         </span>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-services-icon"></i>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
                     </button>
-                    <div id="mobile-services" class="hidden pl-12 space-y-1 py-2">
+                    <div id="mobile-home" class="hidden pl-12 space-y-1 py-2">
                         <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="bike" class="w-5 h-5"></i> Homepage 1
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 1
                         </a>
                         <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="car" class="w-5 h-5"></i> Homepage 2
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 2
                         </a>
-                        <!-- <a href="#services" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="package" class="w-5 h-5"></i> Parcel
-                        </a>
-                        <a href="#services" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="car-front" class="w-5 h-5"></i> Cab
-                        </a> -->
                     </div>
                 </div>
 
-                <!-- About Us -->
+                <!-- Services -->
                 <a href="service.html" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
-                    <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i>
+                    <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
                    Services
                 </a>
                 
-                <!-- Captain Dropdown -->
+                <!-- About Dropdown -->
                 <div class="border-b border-gray-200 py-2">
-                <a href="About.html"> <button onclick="toggleMobileDropdown('mobile-captain')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                <a href="About.html"> <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
                         <span class="flex items-center gap-3">
-                            <i data-lucide="user-plus" class="w-6 h-6 text-[#FCC21B]"></i>
+                            <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i>
                             About Us
                         </span>
-                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-captain-icon"></i> -->
                     </button></a> 
-                    <!-- <div id="mobile-captain" class="hidden pl-12 space-y-1 py-2">
-                        <a href="#captain" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="wallet" class="w-5 h-5"></i> Earnings
-                        </a>
-                        <a href="#captain" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="shield" class="w-5 h-5"></i> Benefits
-                        </a>
-                    </div> -->
                 </div>
-                
-                <!-- Testimonials -->
-                <!-- <a href="#testimonials" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
-                    <i data-lucide="message-circle" class="w-6 h-6 text-[#FCC21B]"></i>
-                    Testimonials
-                </a>  -->
                 
                 <!-- Safety -->
                 <a href="safety.html" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
@@ -511,35 +468,17 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                     Safety
                 </a>
                 <a href="contact.html" onclick="closeMobileMenu()" class="text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-4 border-b border-gray-200 flex items-center gap-3 px-3">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i>
+                    <i data-lucide="phone" class="w-6 h-6 text-[#FCC21B]"></i>
                     Contact
                 </a>
                 <!-- More Dropdown -->
-                <!-- <div class="border-b border-gray-200 py-2">
-                    <button onclick="toggleMobileDropdown('mobile-more')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
-                        <span class="flex items-center gap-3">
-                            <i data-lucide="more-horizontal" class="w-6 h-6 text-[#FCC21B]"></i>
-                            More
-                        </span>
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-more-icon"></i>
-                    </button> -->
-                    <!-- <div id="mobile-more" class="hidden pl-12 space-y-1 py-2">
-                        <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="newspaper" class="w-5 h-5"></i> Blog
-                        </a>
-                        <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="phone" class="w-5 h-5"></i> Contact
-                        </a>
-                        <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
-                            <i data-lucide="help-circle" class="w-5 h-5"></i> Help
-                        </a>
-                    </div> -->
+                <div class="border-b border-gray-200 py-2">
                 </div>
 
                 <!-- CTA Buttons -->
                 <div class="pt-6 space-y-4">
                <a href="dash.html">     <button class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
-                        <i data-lucide="download" class="w-6 h-6"></i>
+                        <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
                         Dashboard
                     </button></a>
                 </div>
@@ -557,7 +496,8 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
     </header>
 
     <!-- Hero Section -->
-<section id="home" class="pt-24 relative min-h-[90vh] flex items-center justify-center overflow-hidden hero-bg">     <div class="absolute inset-0 hero-overlay"></div>
+<section id="home"
+class="pt-24 relative min-h-[90vh] flex items-center justify-center hero-bg">     <div class="absolute inset-0 hero-overlay"></div>
         
         <div class="absolute top-20 left-10 w-72 h-72 bg-[#FCC21B]/20 rounded-full float-animation blur-3xl"></div>
         <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation-reverse blur-3xl"></div>
@@ -581,7 +521,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                 <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                     <div class="relative group mb-4" data-aos="slide-right" data-aos-delay="400">
                         <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#FCC21B] z-10">
-                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                         </div>
                         <input type="text" placeholder="Enter Pickup Location" 
                                class="w-full pl-14 pr-4 py-4 rounded-xl bg-white/90 backdrop-blur text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-[#FCC21B]/30 transition-all text-lg font-medium shadow-lg hover:bg-white">
@@ -1208,25 +1148,25 @@ Travel
 <div class="flex gap-4 justify-center md:justify-start">
 <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
 
-<i data-lucide="linkedin" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="7" r="2"/></svg>
 
 </a>
 
 <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
 
-<i data-lucide="youtube" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
 
 </a>
 
 <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
 
-<i data-lucide="instagram" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
 
 </a>
 
 <a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
 
-<i data-lucide="twitter" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
 
 </a>
 
@@ -1235,7 +1175,7 @@ Travel
 <div class="flex items-center gap-6 justify-center">
 <button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
 
-<i data-lucide="globe" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
 
 English
 
@@ -1243,7 +1183,7 @@ English
 
 <button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
 
-<i data-lucide="map-pin" class="w-5 h-5"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
 
 India
 
@@ -1306,16 +1246,22 @@ India
         // Dropdown Toggle
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
-            const isHidden = dropdown.classList.contains('hidden');
-            
-            document.querySelectorAll('.dropdown-menu').forEach(d => {
-                d.classList.add('hidden');
-                d.classList.remove('active');
+
+            // close all dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu !== dropdown) {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('active');
+                }
             });
-            
-            if (isHidden) {
+
+            // toggle current
+            if (dropdown.classList.contains('hidden')) {
                 dropdown.classList.remove('hidden');
-                setTimeout(() => dropdown.classList.add('active'), 10);
+                dropdown.classList.add('active');
+            } else {
+                dropdown.classList.remove('active');
+                dropdown.classList.add('hidden');
             }
         }
         
@@ -1326,10 +1272,10 @@ India
             
             if (dropdown.classList.contains('hidden')) {
                 dropdown.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
+                if (icon) icon.style.transform = 'rotate(180deg)';
             } else {
                 dropdown.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
+                if (icon) icon.style.transform = 'rotate(0deg)';
             }
         }
         
@@ -1337,8 +1283,8 @@ India
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.group')) {
                 document.querySelectorAll('.dropdown-menu').forEach(d => {
-                    d.classList.add('hidden');
                     d.classList.remove('active');
+                    d.classList.add('hidden');
                 });
             }
         });

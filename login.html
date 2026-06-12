@@ -137,38 +137,41 @@ Sign Up
 
 <script>
 
-const form = document.getElementById("loginForm")
 
-form.addEventListener("submit",function(e){
+const form = document.getElementById("loginForm");
 
-e.preventDefault()
+form.addEventListener("submit", function(e){
 
-const email=document.getElementById("email")
-const password=document.getElementById("password")
-const error=document.getElementById("errorMsg")
+e.preventDefault();
 
-if(email.value==="" || password.value===""){
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const error = document.getElementById("errorMsg");
 
-error.classList.remove("hidden")
+if(email.value === "" || password.value === ""){
 
-email.classList.add("shake")
-password.classList.add("shake")
+    error.classList.remove("hidden");
 
-setTimeout(()=>{
-email.classList.remove("shake")
-password.classList.remove("shake")
-},300)
+    email.classList.add("shake");
+    password.classList.add("shake");
+
+    setTimeout(() => {
+        email.classList.remove("shake");
+        password.classList.remove("shake");
+    }, 300);
 
 }else{
 
-error.classList.add("hidden")
+    error.classList.add("hidden");
 
-alert("Login Successful!")
+    // Redirect to 404 page
+    window.location.href = "404.html";
 
 }
 
-})
+});
 
+</script>
 </script>
 
 
