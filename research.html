@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Labtox</title>
+    <title>Research - Labtox</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           ROOT VARIABLES & RESET
+           ROOT VARIABLES & RESET (From Original Snippet)
            ============================================ */
         :root {
             --primary: #0d9488;
@@ -27,8 +27,16 @@
             --error: #ef4444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
@@ -38,49 +46,53 @@
         }
 
         /* ============================================
-           ANIMATIONS
+           ANIMATIONS (From Original Snippet)
            ============================================ */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeInLeft {
             from { opacity: 0; transform: translateX(-60px); }
             to { opacity: 1; transform: translateX(0); }
         }
+
         @keyframes fadeInRight {
             from { opacity: 0; transform: translateX(60px); }
             to { opacity: 1; transform: translateX(0); }
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(2deg); }
         }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(13, 148, 136, 0); }
         }
+
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
+
         @keyframes slideInDown {
             from { transform: translate3d(0, -100%, 0); opacity: 0; }
             to { transform: translate3d(0, 0, 0); opacity: 1; }
         }
+
         @keyframes loginPulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7); }
             70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(13, 148, 136, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
         }
+
         @keyframes loginShake {
             0%, 100% { transform: translateX(0); }
             10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
             20%, 40%, 60%, 80% { transform: translateX(3px); }
-        }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         /* Utility Classes */
@@ -89,41 +101,73 @@
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
         .delay-300 { transition-delay: 0.3s; }
-        .delay-400 { transition-delay: 0.4s; }
 
         /* ============================================
-           HEADER & TOP BAR (NO LANGUAGE SELECTOR)
+           HEADER & TOP BAR (Exact Replica)
            ============================================ */
         .top-bar {
             background: linear-gradient(135deg, var(--dark-blue) 0%, var(--darker-blue) 100%);
             padding: 15px 0; position: relative; overflow: hidden;
         }
+
         .top-bar::before {
             content: ''; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             animation: shimmer 3s infinite;
         }
+
         .top-bar-content {
             max-width: 1400px; margin: 0 auto; padding: 0 20px;
             display: flex; justify-content: space-between; align-items: center;
             flex-wrap: wrap; gap: 15px; position: relative; z-index: 1;
         }
+
         .top-left {
             display: flex; align-items: center; gap: 30px;
         }
+
         .phone-number, .email-info {
             color: var(--white); display: flex; align-items: center;
             gap: 10px; font-size: 14px; animation: fadeInLeft 0.8s ease-out;
         }
+
         .phone-number i, .email-info i {
             color: var(--primary); animation: pulse 2s infinite;
         }
+
         .top-bar-right {
             display: flex; align-items: center; gap: 20px;
         }
 
-        /* Login Button */
+        .language-selector { position: relative; }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white); padding: 8px 15px; border-radius: 20px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            font-size: 13px; transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        .lang-dropdown {
+            position: absolute; top: 100%; right: 0; margin-top: 10px;
+            background: var(--white); border-radius: 10px; padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); opacity: 0; visibility: hidden;
+            transform: translateY(-10px); transition: all 0.3s ease; min-width: 150px;
+        }
+
+        .lang-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .lang-option {
+            padding: 10px 15px; cursor: pointer; border-radius: 5px;
+            transition: all 0.3s ease; color: var(--text-dark);
+        }
+
+        .lang-option:hover { background: var(--light-bg); color: var(--primary); }
+
+        /* Enhanced Login Button */
         .login-btn {
             background: transparent; color: var(--white);
             padding: 12px 28px; border: 2px solid var(--primary);
@@ -135,19 +179,24 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
+
         .login-btn::before {
             content: ''; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.6s;
         }
+
         .login-btn:hover::before { left: 100%; }
+
         .login-btn:hover {
             background: var(--primary); transform: scale(1.08) translateY(-2px);
             animation: loginShake 0.6s ease-in-out;
             border-color: var(--primary); letter-spacing: 2px;
         }
+
         .login-btn i { transition: all 0.4s ease; }
+
         .login-btn:hover i { transform: rotate(360deg) scale(1.2); }
 
         .appointment-btn {
@@ -158,13 +207,16 @@
             animation: fadeInRight 0.8s ease-out;
             transition: all 0.4s ease; border: 2px solid var(--primary);
         }
+
         .appointment-btn::before {
             content: ''; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transition: left 0.6s;
         }
+
         .appointment-btn:hover::before { left: 100%; }
+
         .appointment-btn:hover {
             background: transparent; transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(13, 148, 136, 0.4);
@@ -178,16 +230,20 @@
             box-shadow: 0 4px 30px rgba(0,0,0,0.1);
             animation: slideInDown 0.8s ease-out;
         }
+
         .nav-container {
             max-width: 1400px; margin: 0 auto; padding: 18px 20px;
             display: flex; justify-content: space-between; align-items: center;
         }
+
         .logo {
             display: flex; align-items: center; gap: 12px;
             font-size: 32px; font-weight: 800; color: var(--dark-blue);
             text-decoration: none; transition: all 0.4s ease;
         }
+
         .logo:hover { transform: scale(1.08) rotate(-2deg); }
+
         .logo-icon {
             width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -195,36 +251,44 @@
             animation: float 4s ease-in-out infinite;
             box-shadow: 0 10px 30px rgba(13, 148, 136, 0.3);
         }
+
         .nav-links {
             display: flex; list-style: none; gap: 40px; align-items: center;
         }
+
         .nav-links li { position: relative; }
+
         .nav-links a {
             text-decoration: none; color: var(--text-dark); font-weight: 500;
             font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px;
             position: relative; transition: all 0.3s ease; padding: 10px 0;
             display: block;
         }
+
         .nav-links a::after {
             content: ''; position: absolute; bottom: 0; left: 0;
             width: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-light));
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2px;
         }
+
         .nav-links a::before {
             content: ''; position: absolute; top: -5px; left: 50%;
             width: 6px; height: 6px; background: var(--primary);
             border-radius: 50%; opacity: 0; transform: translateX(-50%);
             transition: all 0.3s ease;
         }
+
         .nav-links a:hover { color: var(--primary); transform: translateY(-2px); }
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover::before { opacity: 1; top: -8px; }
+
         .nav-links a.active { color: var(--primary); }
         .nav-links a.active::after { width: 100%; }
 
         .nav-icons {
             display: flex; gap: 15px; align-items: center;
         }
+
         .nav-icon {
             width: 45px; height: 45px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -232,11 +296,13 @@
             position: relative; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: var(--light-bg); font-size: 16px;
         }
+
         .nav-icon:hover {
             background: var(--primary); color: var(--white);
             transform: translateY(-5px) scale(1.1) rotate(10deg);
             box-shadow: 0 10px 25px rgba(13, 148, 136, 0.4);
         }
+
         .cart-badge {
             position: absolute; top: -5px; right: -5px;
             background: linear-gradient(135deg, var(--accent), #f97316);
@@ -252,336 +318,328 @@
             display: none; flex-direction: column; gap: 6px;
             cursor: pointer; padding: 8px; background: none; border: none;
         }
+
         .mobile-menu-btn span {
             width: 28px; height: 3px; background: var(--text-dark);
             transition: all 0.4s ease; border-radius: 3px;
         }
+
         .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         .mobile-menu-btn.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
         .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
         /* ============================================
-           CONTACT PAGE STYLES
+           RESEARCH PAGE SPECIFIC STYLES
            ============================================ */
-        .contact-hero {
-            min-height: 60vh; position: relative; overflow: hidden;
+        
+        /* Hero Section */
+        .research-hero {
+            min-height: 70vh; position: relative; overflow: hidden;
             display: flex; align-items: center;
             background: linear-gradient(135deg, rgba(13, 148, 136, 0.95), rgba(30, 58, 95, 0.95));
         }
-        .contact-hero-bg {
+
+        .research-hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80') center/cover;
+            background: url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1920&q=80') center/cover;
             opacity: 0.2;
         }
-        .contact-hero-content {
-            max-width: 1400px; margin: 0 auto; padding: 80px 20px;
+
+        .research-hero-content {
+            max-width: 1400px; margin: 0 auto; padding: 100px 20px;
             width: 100%; position: relative; z-index: 2;
             text-align: center;
         }
-        .contact-hero h1 {
+
+        .research-hero h1 {
             font-size: clamp(2.5rem, 5vw, 4rem);
             color: var(--white);
             margin-bottom: 20px;
             animation: fadeInUp 1s ease-out;
         }
-        .contact-hero p {
+
+        .research-hero p {
             color: rgba(255,255,255,0.9);
             font-size: 18px;
             max-width: 700px;
-            margin: 0 auto;
+            margin: 0 auto 40px;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
 
+        .research-stats-bar {
+            display: flex; justify-content: center; gap: 60px;
+            margin-top: 60px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .r-stat {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .r-stat-number {
+            font-size: 42px; font-weight: 800; display: block;
+        }
+
+        .r-stat-label {
+            font-size: 14px; text-transform: uppercase; letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        /* Section Headers */
         .section-header {
             text-align: center; max-width: 700px; margin: 0 auto 60px;
         }
+
         .section-label {
             display: inline-flex; align-items: center; gap: 10px;
             color: var(--primary); font-size: 14px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px;
         }
+
         .section-title {
             font-size: clamp(2rem, 4vw, 3rem); color: var(--dark-blue);
             font-weight: 700; line-height: 1.2;
         }
 
-        /* Contact Info Cards */
-        .contact-info-section {
-            padding: 100px 20px; background: var(--white);
-            position: relative;
-            margin-top: -80px;
-            z-index: 10;
-        }
-        .contact-cards-container {
-            max-width: 1400px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        .contact-card {
-            background: var(--white); padding: 50px 40px;
-            border-radius: 25px; text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.03);
-            position: relative; overflow: hidden;
-        }
-        .contact-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            transform: scaleX(0); transition: transform 0.5s ease;
-        }
-        .contact-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 30px 80px rgba(13, 148, 136, 0.15);
-        }
-        .contact-card:hover::before { transform: scaleX(1); }
-        .contact-icon-wrap {
-            width: 90px; height: 90px; margin: 0 auto 30px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            position: relative; animation: float 4s ease-in-out infinite;
-        }
-        .contact-icon-wrap::after {
-            content: ''; position: absolute; inset: -10px;
-            border: 2px dashed var(--primary); border-radius: 50%;
-            opacity: 0.3; animation: rotate 20s linear infinite;
-        }
-        .contact-icon-wrap i { font-size: 36px; color: var(--white); }
-        .contact-card h3 {
-            font-size: 22px; color: var(--dark-blue);
-            margin-bottom: 15px; font-weight: 700;
-        }
-        .contact-card p {
-            color: var(--text-light); font-size: 15px;
-            line-height: 1.8; margin-bottom: 10px;
-        }
-        .contact-card a {
-            color: var(--primary); text-decoration: none;
-            font-weight: 600; transition: all 0.3s ease;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-        .contact-card a:hover { color: var(--primary-dark); gap: 12px; }
-
-        /* Contact Form Section */
-        .contact-form-section {
+        /* Current Projects Grid */
+        .projects-section {
             padding: 100px 20px; background: var(--light-bg);
         }
-        .form-container {
+
+        .projects-grid {
             max-width: 1400px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1.2fr;
-            gap: 60px; align-items: start;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
-        .form-info { padding: 40px; }
-        .form-info h2 {
-            font-size: 36px; color: var(--dark-blue);
-            margin-bottom: 25px; font-weight: 700;
-        }
-        .form-info > p {
-            color: var(--text-light); font-size: 16px;
-            line-height: 1.8; margin-bottom: 40px;
-        }
-        .working-hours {
-            background: var(--white); padding: 30px;
-            border-radius: 20px; margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .working-hours h4 {
-            display: flex; align-items: center; gap: 12px;
-            color: var(--dark-blue); font-size: 18px;
-            margin-bottom: 20px;
-        }
-        .working-hours h4 i { color: var(--primary); }
-        .hours-list { list-style: none; }
-        .hours-list li {
-            display: flex; justify-content: space-between;
-            padding: 12px 0; border-bottom: 1px solid var(--light-bg);
-            color: var(--text-light); font-size: 15px;
-        }
-        .hours-list li:last-child { border-bottom: none; }
-        .hours-list li strong { color: var(--dark-blue); font-weight: 600; }
-        .emergency-box {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px; border-radius: 20px;
-            color: var(--white); text-align: center;
-        }
-        .emergency-box i {
-            font-size: 40px; margin-bottom: 15px;
-            animation: pulse 2s infinite;
-        }
-        .emergency-box h4 { font-size: 20px; margin-bottom: 10px; }
-        .emergency-box p { font-size: 14px; opacity: 0.9; }
 
-        /* Form Styles */
-        .contact-form-wrap {
-            background: var(--white); padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.1);
+        .project-card {
+            background: var(--white); padding: 40px 35px; border-radius: 25px;
+            position: relative; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
         }
-        .form-row {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 25px; margin-bottom: 25px;
-        }
-        .form-group { position: relative; }
-        .form-group.full-width { grid-column: 1 / -1; }
-        .form-group label {
-            display: block; margin-bottom: 10px;
-            color: var(--dark-blue); font-weight: 600;
-            font-size: 14px;
-        }
-        .form-group label span { color: var(--error); }
-        .input-icon-wrap { position: relative; }
-        .input-icon-wrap i {
-            position: absolute; left: 20px; top: 50%;
-            transform: translateY(-50%); color: var(--primary);
-            font-size: 16px; transition: all 0.3s ease;
-        }
-        .input-icon-wrap input,
-        .input-icon-wrap select,
-        textarea {
-            width: 100%; padding: 16px 20px 16px 50px;
-            border: 2px solid var(--light-bg); border-radius: 15px;
-            font-family: 'Poppins', sans-serif; font-size: 15px;
-            transition: all 0.4s ease; background: var(--light-bg);
-            color: var(--text-dark);
-        }
-        textarea {
-            padding-left: 20px; min-height: 150px; resize: vertical;
-        }
-        .input-icon-wrap input:focus,
-        .input-icon-wrap select:focus,
-        textarea:focus {
-            outline: none; border-color: var(--primary);
-            background: var(--white); box-shadow: 0 5px 20px rgba(13, 148, 136, 0.1);
-        }
-        .input-icon-wrap input:focus + i {
-            color: var(--primary-dark); transform: translateY(-50%) scale(1.1);
-        }
-        select {
-            cursor: pointer; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 20px center;
-            background-size: 20px;
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white); border: none; padding: 18px 50px;
-            border-radius: 35px; font-family: 'Poppins', sans-serif;
-            font-size: 16px; font-weight: 600; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 12px;
-            transition: all 0.4s ease; position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.3);
-        }
-        .submit-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%;
+
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-        .submit-btn:hover::before { left: 100%; }
-        .submit-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.4);
-        }
-        .submit-btn i { transition: all 0.4s ease; }
-        .submit-btn:hover i { transform: translateX(5px); }
-
-        /* Map Section */
-        .map-section {
-            position: relative; height: 500px; overflow: hidden;
-            background: var(--light-bg);
-        }
-        .map-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            filter: grayscale(20%) contrast(1.1);
-            transition: filter 0.3s ease;
-        }
-        .map-container iframe:hover { filter: grayscale(0%) contrast(1); }
-        .map-overlay-card {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--white);
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 10;
-            animation: float 4s ease-in-out infinite;
-        }
-        .map-overlay-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 24px;
-        }
-        .map-overlay-text h4 {
-            color: var(--dark-blue);
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-        .map-overlay-text p {
-            color: var(--text-light);
-            font-size: 13px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0; transition: opacity 0.5s ease; z-index: 0;
         }
 
-        /* FAQ Section */
-        .faq-section {
-            padding: 100px 20px; background: var(--white);
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(13, 148, 136, 0.2);
         }
-        .faq-container { max-width: 900px; margin: 0 auto; }
-        .faq-item {
-            background: var(--light-bg); border-radius: 20px;
-            margin-bottom: 20px; overflow: hidden;
+
+        .project-card:hover::before { opacity: 1; }
+
+        .project-card > * { position: relative; z-index: 2; }
+
+        .project-status {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(13, 148, 136, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
             transition: all 0.4s ease;
         }
-        .faq-item:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .faq-question {
-            padding: 25px 30px; display: flex;
-            justify-content: space-between; align-items: center;
-            cursor: pointer; transition: all 0.3s ease;
+
+        .project-card:hover .project-status {
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
         }
-        .faq-question h4 {
-            color: var(--dark-blue); font-size: 17px;
-            font-weight: 600; padding-right: 20px;
+
+        .project-icon-wrap {
+            width: 80px; height: 80px; margin-bottom: 25px;
+            position: relative; transition: all 0.5s ease;
         }
-        .faq-icon {
-            width: 40px; height: 40px; background: var(--white);
+
+        .project-icon {
+            width: 100%; height: 100%; display: flex; align-items: center;
+            justify-content: center; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 20px; color: var(--white); font-size: 32px;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .project-icon {
+            background: var(--white); color: var(--primary);
+            transform: rotateY(360deg) scale(1.1);
+        }
+
+        .project-title {
+            font-size: 22px; font-weight: 700; color: var(--dark-blue);
+            margin-bottom: 15px; transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-title { color: var(--white); }
+
+        .project-desc {
+            color: var(--text-light); font-size: 15px; line-height: 1.7;
+            margin-bottom: 25px; transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-desc { color: rgba(255,255,255,0.9); }
+
+        .project-arrow {
+            position: absolute; bottom: 35px; right: 35px;
+            width: 50px; height: 50px; background: var(--light-bg);
             border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: var(--primary);
-            transition: all 0.4s ease; flex-shrink: 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            justify-content: center; color: var(--primary); font-size: 18px;
+            transition: all 0.5s ease;
         }
-        .faq-item.active .faq-icon {
+
+        .project-card:hover .project-arrow {
+            background: var(--white); color: var(--primary);
+            transform: rotate(45deg) scale(1.15);
+        }
+
+        /* Publications Section */
+        .publications-section {
+            padding: 100px 20px; background: var(--white);
+        }
+
+        .pub-filters {
+            display: flex; justify-content: center; gap: 15px;
+            margin-bottom: 50px; flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 30px; border: 2px solid var(--light-bg);
+            background: var(--white); color: var(--text-dark);
+            border-radius: 30px; cursor: pointer; font-weight: 600;
+            transition: all 0.3s ease; font-family: 'Poppins', sans-serif;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary); color: var(--white);
+            border-color: var(--primary); transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(13, 148, 136, 0.2);
+        }
+
+        .pub-list {
+            max-width: 1000px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+
+        .pub-item {
+            display: flex; gap: 30px; padding: 30px;
+            background: var(--light-bg); border-radius: 20px;
+            transition: all 0.4s ease; align-items: center;
+            border-left: 5px solid transparent;
+        }
+
+        .pub-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .pub-year {
+            font-size: 14px; color: var(--primary); font-weight: 700;
+            min-width: 60px;
+        }
+
+        .pub-content h4 {
+            font-size: 18px; color: var(--dark-blue); margin-bottom: 8px;
+        }
+
+        .pub-content p {
+            color: var(--text-light); font-size: 14px;
+        }
+
+        .pub-link {
+            margin-left: auto; color: var(--primary);
+            width: 45px; height: 45px; border-radius: 50%;
+            background: var(--white); display: flex; align-items: center;
+            justify-content: center; text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .pub-item:hover .pub-link {
             background: var(--primary); color: var(--white);
             transform: rotate(45deg);
         }
-        .faq-answer {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
+
+        /* Facilities Section (Features Style) */
+        .facilities-section {
+            padding: 100px 20px; background: var(--light-bg);
         }
-        .faq-item.active .faq-answer {
-            max-height: 300px; padding: 0 30px 25px;
+
+        .facilities-container {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1.5fr 1fr;
+            gap: 50px; align-items: center;
         }
-        .faq-answer p { color: var(--text-light); line-height: 1.8; }
+
+        .facility-col { display: flex; flex-direction: column; gap: 30px; }
+
+        .facility-box {
+            display: flex; gap: 20px; padding: 25px;
+            background: var(--white); border-radius: 20px;
+            transition: all 0.5s ease; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .facility-box:hover {
+            transform: translateX(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .facility-col-right .facility-box:hover { transform: translateX(-15px); }
+
+        .facility-icon {
+            width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            color: var(--white); font-size: 24px; flex-shrink: 0;
+            transition: all 0.5s ease;
+        }
+
+        .facility-box:hover .facility-icon {
+            transform: rotate(360deg) scale(1.1);
+            background: var(--dark-blue);
+        }
+
+        .facility-content h4 {
+            color: var(--dark-blue); font-size: 18px; margin-bottom: 8px;
+        }
+
+        .facility-content p {
+            color: var(--text-light); font-size: 14px; line-height: 1.6;
+        }
+
+        .facility-center {
+            position: relative; text-align: center;
+        }
+
+        .facility-image {
+            width: 100%; max-width: 600px; border-radius: 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .facility-badge {
+            position: absolute; background: var(--white);
+            padding: 20px; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            display: flex; align-items: center; gap: 15px;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .facility-badge.badge-1 { top: 10%; left: -20px; }
+        .facility-badge.badge-2 { bottom: 15%; right: -20px; animation-delay: 1s; }
+
+        .badge-icon {
+            width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent), #f97316);
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            color: var(--white); font-size: 24px;
+        }
 
         /* CTA Section */
         .cta-section {
@@ -589,29 +647,36 @@
             padding: 100px 20px; position: relative; overflow: hidden;
             text-align: center;
         }
+
         .cta-section::before, .cta-section::after {
             content: ''; position: absolute; border-radius: 50%;
             background: rgba(255,255,255,0.05);
         }
+
         .cta-section::before {
             width: 500px; height: 500px; top: -250px; left: -250px;
             animation: float 15s infinite;
         }
+
         .cta-section::after {
             width: 400px; height: 400px; bottom: -200px; right: -200px;
             animation: float 12s infinite reverse;
         }
+
         .cta-content {
             position: relative; z-index: 1; max-width: 800px; margin: 0 auto;
         }
+
         .cta-content h2 {
             color: var(--white); font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 20px;
         }
+
         .cta-content p {
             color: rgba(255,255,255,0.9); font-size: 18px;
             margin-bottom: 40px;
         }
+
         .btn-white {
             background: var(--white); color: var(--primary);
             padding: 18px 40px; border-radius: 35px; text-decoration: none;
@@ -619,93 +684,117 @@
             align-items: center; gap: 12px; transition: all 0.4s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
+
         .btn-white:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        /* Footer */
+        /* ============================================
+           FOOTER (Exact Replica)
+           ============================================ */
         footer {
             background: var(--darker-blue); color: var(--white);
             padding: 100px 20px 40px; position: relative;
         }
+
         .footer-grid {
             max-width: 1400px; margin: 0 auto; display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; gap: 50px;
             margin-bottom: 80px;
         }
+
         .footer-brand .logo { color: var(--white); margin-bottom: 25px; }
         .footer-brand > p {
             color: rgba(255,255,255,0.7); line-height: 1.9;
             margin-bottom: 30px; font-size: 15px;
         }
+
         .footer-social { display: flex; gap: 15px; }
+
         .social-link {
             width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             color: var(--white); text-decoration: none; transition: all 0.4s ease;
             position: relative; overflow: hidden;
         }
+
         .social-link::before {
             content: ''; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%; background: var(--primary);
             transform: scale(0); transition: transform 0.4s ease; border-radius: 50%;
         }
+
         .social-link:hover::before { transform: scale(1); }
         .social-link:hover { border-color: var(--primary); transform: translateY(-5px); }
         .social-link i { position: relative; z-index: 1; transition: all 0.4s ease; }
         .social-link:hover i { transform: rotate(360deg); }
+
         .footer-column h4 {
             color: var(--white); font-size: 20px; margin-bottom: 30px;
             display: flex; align-items: center; gap: 12px; font-weight: 600;
         }
+
         .footer-column h4::before {
             content: ''; width: 8px; height: 8px;
             background: var(--primary); border-radius: 50%;
             animation: pulse 2s infinite;
         }
+
         .footer-column ul { list-style: none; }
         .footer-column li { margin-bottom: 15px; }
+
         .footer-column a {
             color: rgba(255,255,255,0.7); text-decoration: none;
             transition: all 0.4s ease; display: flex; align-items: center;
             gap: 12px; font-size: 15px;
         }
+
         .footer-column a::before {
             content: '\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
             font-size: 12px; color: var(--primary); opacity: 0;
             transition: all 0.4s ease;
         }
+
         .footer-column a:hover { color: var(--primary); padding-left: 15px; }
         .footer-column a:hover::before { opacity: 1; }
+
         .contact-list li {
             display: flex; align-items: flex-start; gap: 15px;
             color: rgba(255,255,255,0.7); margin-bottom: 20px;
         }
+
         .contact-list i {
             color: var(--primary); margin-top: 5px; font-size: 18px; width: 25px;
         }
+
         .newsletter-form { margin-top: 25px; position: relative; }
+
         .newsletter-form input {
             width: 100%; padding: 18px 60px 18px 25px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px; color: var(--white); font-size: 15px;
             transition: all 0.4s ease;
         }
+
         .newsletter-form input:focus {
             outline: none; border-color: var(--primary);
             background: rgba(255,255,255,0.1);
         }
+
         .newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+
         .newsletter-btn {
             position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
             width: 50px; height: 50px; background: var(--primary);
             border: none; border-radius: 12px; color: var(--white);
             cursor: pointer; transition: all 0.4s ease; font-size: 18px;
         }
+
         .newsletter-btn:hover {
             background: var(--primary-light); transform: translateY(-50%) scale(1.1);
         }
+
         .footer-bottom {
             max-width: 1400px; margin: 0 auto;
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -713,19 +802,25 @@
             justify-content: space-between; align-items: center; flex-wrap: wrap;
             gap: 20px;
         }
+
         .footer-bottom p { color: rgba(255,255,255,0.5); font-size: 14px; }
 
-        /* Responsive */
+        /* ============================================
+           RESPONSIVE STYLES (From Original Snippet)
+           ============================================ */
         @media (max-width: 1200px) {
-            .contact-cards-container { grid-template-columns: repeat(2, 1fr); }
-            .form-container { grid-template-columns: 1fr; gap: 40px; }
+            .facilities-container { grid-template-columns: 1fr; gap: 40px; }
+            .facility-col-left, .facility-col-right { order: 2; }
+            .facility-center { order: 1; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
-            .map-section { height: 400px; }
         }
+
         @media (max-width: 768px) {
-            .top-bar-content { flex-direction: row; justify-content: center; gap: 15px; padding: 15px; }
-            .top-left { display: none; }
-            .top-bar-right { width: auto; justify-content: center; flex-wrap: wrap; gap: 10px; }
+            /* Top Bar Mobile */
+            .top-bar-content { flex-direction: column; gap: 15px; padding: 15px; }
+            .top-bar-right { width: 100%; justify-content: center; flex-wrap: wrap; gap: 10px; }
+            
+            /* Mobile Navigation */
             .mobile-menu-btn { display: flex; }
             .nav-links {
                 position: fixed; top: 0; left: -100%; width: 85%; max-width: 320px;
@@ -738,15 +833,24 @@
             .nav-links li { width: 100%; border-bottom: 1px solid var(--light-bg); }
             .nav-links a { padding: 18px 0; font-size: 16px; width: 100%; display: flex; justify-content: space-between; }
             .nav-icons { display: none; }
-            .contact-hero h1 { font-size: 2rem; }
-            .contact-cards-container { grid-template-columns: 1fr; margin-top: 0; }
-            .contact-card { padding: 40px 30px; }
-            .form-row { grid-template-columns: 1fr; gap: 20px; }
-            .contact-form-wrap { padding: 30px; }
-            .form-info { padding: 20px; }
-            .map-section { height: 350px; }
-            .map-overlay-card { bottom: 20px; padding: 15px 20px; gap: 10px; }
-            .map-overlay-icon { width: 40px; height: 40px; font-size: 20px; }
+
+            /* Hero Mobile */
+            .research-hero h1 { font-size: 2rem; }
+            .research-stats-bar { flex-direction: column; gap: 30px; }
+
+            /* Projects Mobile */
+            .projects-grid { grid-template-columns: 1fr; }
+            
+            /* Publications Mobile */
+            .pub-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .pub-link { margin-left: 0; }
+
+            /* Facilities Mobile */
+            .facility-box { flex-direction: column; text-align: center; }
+            .facility-icon { margin: 0 auto; }
+            .facility-badge { display: none; }
+
+            /* Footer Mobile */
             .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-brand .logo { justify-content: center; }
             .footer-social { justify-content: center; }
@@ -756,18 +860,17 @@
             .newsletter-form { max-width: 300px; margin: 20px auto 0; }
             .footer-bottom { flex-direction: column; text-align: center; }
         }
+
         @media (max-width: 480px) {
-            .contact-hero h1 { font-size: 1.8rem; }
-            .contact-icon-wrap { width: 70px; height: 70px; }
-            .contact-icon-wrap i { font-size: 28px; }
-            .login-btn { padding: 10px 20px; font-size: 12px; }
-            .appointment-btn { padding: 10px 20px; font-size: 12px; }
+            .research-hero h1 { font-size: 1.8rem; }
+            .filter-btn { padding: 10px 20px; font-size: 14px; }
         }
     </style>
+<!-- <base target="_blank"> -->
 </head>
 <body>
 
-    <!-- Top Bar (NO LANGUAGE SELECTOR) -->
+    <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-content">
             <div class="top-left">
@@ -781,7 +884,7 @@
                 </div>
             </div>
             <div class="top-bar-right">
-                <!-- Language selector REMOVED - only Login and Appointment buttons -->
+                
                 <a href="login.html" class="login-btn">
                     <i class="fas fa-user"></i>
                     <span>Login</span>
@@ -791,21 +894,19 @@
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav>
-       
+    <!-- Navigation --> 
+   <nav>
         <div class="nav-container">
             <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px;">
                 <img src="logo.webp" alt="Stackly Logo" style="height: 55px; width: 50px; object-fit: contain;">
                 <span style="font-size: 28px; font-weight: 800; color: var(--dark-blue);">Stackly</span>
             </a>
-            
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="research.html">Research</a></li>
+                <li><a href="research.html" class="active">Research</a></li>
                 <li><a href="biosafe.html">Biosafety</a></li>
                 <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html" class="active">Contact Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
             </ul>
 
             <div class="nav-icons">
@@ -827,212 +928,208 @@
         </div>
     </nav>
 
-    <!-- Contact Hero Section -->
-    <section class="contact-hero">
-        <div class="contact-hero-bg"></div>
-        <div class="contact-hero-content">
+    <!-- Research Hero Section -->
+    <section class="research-hero">
+        <div class="research-hero-bg"></div>
+        <div class="research-hero-content">
             <div class="section-label" style="color: var(--white); justify-content: center; margin-bottom: 20px;">
-                <i class="fas fa-headset"></i> Get in Touch
+                <i class="fas fa-microscope"></i> Innovation Hub
             </div>
-            <h1>Contact Us</h1>
-            <p>Have questions about our services or research? We're here to help. Reach out to our team of experts.</p>
-        </div>
-    </section>
-
-    <!-- Contact Info Cards -->
-    <section class="contact-info-section">
-        <div class="contact-cards-container">
-            <div class="contact-card animate-on-scroll">
-                <div class="contact-icon-wrap">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <h3>Visit Us</h3>
-                <p>5th Street, New York<br>USA 10001</p>
-                <a href="404.html" target="_blank">Get Directions <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="contact-card animate-on-scroll delay-100">
-                <div class="contact-icon-wrap">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
-                <h3>Call Us</h3>
-                <p>+91-234-567-8900<br>+91-234-567-8901</p>
-                <a href="404.html">Call Now <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="contact-card animate-on-scroll delay-200">
-                <div class="contact-icon-wrap">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <h3>Email Us</h3>
-                <p>contact@labtox.com<br>support@labtox.com</p>
-                <a href="404.html">Send Email <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form Section -->
-    <section class="contact-form-section" id="contact">
-        <div class="form-container">
-            <div class="form-info animate-on-scroll">
-                <h2>Send Us a Message</h2>
-                <p>Fill out the form below and our team will get back to you within 24 hours. For urgent inquiries, please call our emergency line.</p>
-                
-                <div class="working-hours animate-on-scroll delay-100">
-                    <h4><i class="fas fa-clock"></i> Working Hours</h4>
-                    <ul class="hours-list">
-                        <li><strong>Monday - Friday</strong> <span>8:00 AM - 8:00 PM</span></li>
-                        <li><strong>Saturday</strong> <span>9:00 AM - 5:00 PM</span></li>
-                        <li><strong>Sunday</strong> <span>Emergency Only</span></li>
-                    </ul>
-                </div>
-
-                <div class="emergency-box animate-on-scroll delay-200">
-                    <i class="fas fa-ambulance"></i>
-                    <h4>24/7 Emergency Line</h4>
-                    <p>For urgent medical inquiries and emergencies</p>
-                </div>
-            </div>
-
-            <div class="contact-form-wrap animate-on-scroll delay-100">
-                <form id="contactForm" onsubmit="handleSubmit(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>First Name <span>*</span></label>
-                            <div class="input-icon-wrap">
-                                <input type="text" placeholder="John" required>
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name <span>*</span></label>
-                            <div class="input-icon-wrap">
-                                <input type="text" placeholder="Doe" required>
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email Address <span>*</span></label>
-                            <div class="input-icon-wrap">
-                                <input type="email" placeholder="john@example.com" required>
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <div class="input-icon-wrap">
-                                <input type="tel" placeholder="+1 234 567 890">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label>Inquiry Type <span>*</span></label>
-                            <div class="input-icon-wrap">
-                                <select required>
-                                    <option value="">Select a service</option>
-                                    <option value="diagnostic">Diagnostic Testing</option>
-                                    <option value="genetic">Genetic Testing</option>
-                                    <option value="research">Research Collaboration</option>
-                                    <option value="biosafety">Biosafety Consultation</option>
-                                    <option value="general">General Inquiry</option>
-                                </select>
-                                <i class="fas fa-flask" style="left: 20px;"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label>Your Message <span>*</span></label>
-                            <textarea placeholder="Tell us about your inquiry..." required></textarea>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="submit-btn">
-                        Send Message <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Map Section -->
-    <section class="map-section">
-        <div class="map-container">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2s5th%20Ave%2C%20New%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1625551234567!5m2!1sen!2sin" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <h1>Advancing Medical Research</h1>
+            <p>Pioneering breakthroughs in diagnostics, genomics, and biosafety to create a healthier tomorrow.</p>
             
-            <div class="map-overlay-card">
-                <div class="map-overlay-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+            <div class="research-stats-bar">
+                <div class="r-stat">
+                    <span class="r-stat-number">150+</span>
+                    <span class="r-stat-label">Publications</span>
                 </div>
-                <div class="map-overlay-text">
-                    <h4>Labtox Headquarters</h4>
-                    <p>5th Street, New York, USA</p>
+                <div class="r-stat">
+                    <span class="r-stat-number">45</span>
+                    <span class="r-stat-label">Active Studies</span>
+                </div>
+                <div class="r-stat">
+                    <span class="r-stat-number">12</span>
+                    <span class="r-stat-label">Patents Filed</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
+    <!-- Current Projects Section -->
+    <section class="projects-section">
         <div class="section-header animate-on-scroll">
-            <div class="section-label"><i class="fas fa-question-circle"></i> FAQ</div>
-            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="section-label"><i class="fas fa-bolt"></i> Current Projects</div>
+            <h2 class="section-title">Ongoing Research Initiatives</h2>
         </div>
 
-        <div class="faq-container">
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <h4>How do I schedule a laboratory test appointment?</h4>
-                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
+       <a href="404.html"> <div class="projects-grid">
+            <div class="project-card animate-on-scroll">
+                <div class="project-status">In Progress</div>
+                <div class="project-icon-wrap">
+                    <div class="project-icon"><i class="fas fa-dna"></i></div>
                 </div>
-                <div class="faq-answer">
-                    <p>You can schedule an appointment through our online booking system, by calling our customer service line at +91-234-567-8900, or by visiting our facility directly. We recommend booking in advance to ensure availability.</p>
+                <h3 class="project-title">Genomic Sequencing Protocols</h3>
+                <p class="project-desc">Developing next-generation sequencing methods for early cancer detection with 99.9% accuracy rates.</p>
+                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+
+            <div class="project-card animate-on-scroll delay-100">
+                <div class="project-status">Recruiting</div>
+                <div class="project-icon-wrap">
+                    <div class="project-icon"><i class="fas fa-virus"></i></div>
+                </div>
+                <h3 class="project-title">Viral Pathogen Analysis</h3>
+                <p class="project-desc">Studying mutation patterns in RNA viruses to predict outbreak potential and vaccine efficacy.</p>
+                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+
+            <div class="project-card animate-on-scroll delay-200">
+                <div class="project-status">Data Analysis</div>
+                <div class="project-icon-wrap">
+                    <div class="project-icon"><i class="fas fa-brain"></i></div>
+                </div>
+                <h3 class="project-title">AI in Pathology</h3>
+                <p class="project-desc">Training deep learning models to assist pathologists in identifying cellular anomalies faster.</p>
+                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+
+            <div class="project-card animate-on-scroll">
+                <div class="project-status">Peer Review</div>
+                <div class="project-icon-wrap">
+                    <div class="project-icon"><i class="fas fa-pills"></i></div>
+                </div>
+                <h3 class="project-title">Pharmacogenomics</h3>
+                <p class="project-desc">Investigating how genetic makeup affects individual responses to drugs to enable personalized medicine.</p>
+                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div></a>
+    </section>
+
+    <!-- Publications Section -->
+    <section class="publications-section">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label"><i class="fas fa-book"></i> Knowledge Base</div>
+            <h2 class="section-title">Latest Publications</h2>
+        </div>
+
+        <div class="pub-filters animate-on-scroll">
+            <button class="filter-btn active" onclick="filterPubs('all')">All</button>
+            <button class="filter-btn" onclick="filterPubs('2024')">2024</button>
+            <button class="filter-btn" onclick="filterPubs('2023')">2023</button>
+            <button class="filter-btn" onclick="filterPubs('clinical')">Clinical</button>
+        </div>
+
+        <div class="pub-list" id="pubList">
+            <div class="pub-item animate-on-scroll" data-year="2024" data-cat="clinical">
+                <div class="pub-year">2024</div>
+                <div class="pub-content">
+                    <h4>Advanced Biomarkers in Early Stage Oncology</h4>
+                    <p>Journal of Medical Diagnostics • Vol. 45 • Dr. Sarah Johnson et al.</p>
+                </div>
+                <a href="404.html" class="pub-link"><i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="pub-item animate-on-scroll delay-100" data-year="2024" data-cat="research">
+                <div class="pub-year">2024</div>
+                <div class="pub-content">
+                    <h4>CRISPR Applications in Laboratory Settings</h4>
+                    <p>Genetic Engineering Today • Vol. 12 • Dr. Michael Chen</p>
+                </div>
+                <a href="404.html" class="pub-link"><i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="pub-item animate-on-scroll delay-200" data-year="2023" data-cat="clinical">
+                <div class="pub-year">2023</div>
+                <div class="pub-content">
+                    <h4>Statistical Analysis of Blood Sample Variations</h4>
+                    <p>Clinical Chemistry Review • Vol. 88 • Labtox Research Team</p>
+                </div>
+                <a href="404.html" class="pub-link"><i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="pub-item animate-on-scroll delay-300" data-year="2023" data-cat="research">
+                <div class="pub-year">2023</div>
+                <div class="pub-content">
+                    <h4>Microbiome Diversity in Urban Populations</h4>
+                    <p>Nature Microbiology • Vol. 9 • Dr. Emily Williams et al.</p>
+                </div>
+                <a href="404.html" class="pub-link"><i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="facilities-section">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label"><i class="fas fa-building"></i> Infrastructure</div>
+            <h2 class="section-title">World-Class Facilities</h2>
+        </div>
+
+    <a href="404.html">    <div class="facilities-container">
+            <div class="facility-col facility-col-left">
+                <div class="facility-box animate-on-scroll">
+                    <div class="facility-icon"><i class="fas fa-wind"></i></div>
+                    <div class="facility-content">
+                        <h4>Clean Room Labs</h4>
+                        <p>ISO 5 certified environments for sterile sample processing.</p>
+                    </div>
+                </div>
+                <div class="facility-box animate-on-scroll delay-100">
+                    <div class="facility-icon"><i class="fas fa-snowflake"></i></div>
+                    <div class="facility-content">
+                        <h4>Cryogenic Storage</h4>
+                        <p>-150°C storage facilities for long-term sample preservation.</p>
+                    </div>
+                </div>
+                <div class="facility-box animate-on-scroll delay-200">
+                    <div class="facility-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="facility-content">
+                        <h4>BSL-3 Safety</h4>
+                        <p>Biosafety Level 3 labs for handling infectious agents.</p>
+                    </div>
+                </div>
+            </div></a>
+
+            <div class="facility-center animate-on-scroll">
+                <img src="homeimg3.webp" alt="Lab Facility" class="facility-image">
+                <div class="facility-badge badge-1">
+                    <div class="badge-icon"><i class="fas fa-certificate"></i></div>
+                    <div>
+                        <h4 style="font-size: 16px; margin-bottom: 4px;">ISO 17025</h4>
+                        <p style="font-size: 13px; color: var(--text-light);">Certified</p>
+                    </div>
+                </div>
+                <div class="facility-badge badge-2">
+                    <div class="badge-icon"><i class="fas fa-award"></i></div>
+                    <div>
+                        <h4 style="font-size: 16px; margin-bottom: 4px;">Top Tier</h4>
+                        <p style="font-size: 13px; color: var(--text-light);">Facility</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item animate-on-scroll delay-100">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <h4>What are your sample collection procedures?</h4>
-                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            <div class="facility-col facility-col-right">
+                <div class="facility-box animate-on-scroll">
+                    <div class="facility-icon"><i class="fas fa-microscope"></i></div>
+                  <a href="404.html">  <div class="facility-content">
+                        <h4>Electron Microscopy</h4>
+                        <p>High-resolution imaging for cellular structure analysis.</p>
+                    </div></a>
                 </div>
-                <div class="faq-answer">
-                    <p>We offer both in-lab sample collection and home collection services. Our trained phlebotomists follow strict biosafety protocols. Fasting requirements vary by test type - you'll receive specific instructions when booking.</p>
-                </div>
-            </div>
-
-            <div class="faq-item animate-on-scroll delay-200">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <h4>How long does it take to receive test results?</h4>
-                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
-                </div>
-                <div class="faq-answer">
-                    <p>Most routine tests are available within 24-48 hours. Complex genetic and specialized tests may take 5-7 business days. Results are accessible securely through our patient portal and emailed to registered addresses.</p>
-                </div>
-            </div>
-
-            <div class="faq-item animate-on-scroll delay-300">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <h4>Do you offer research collaboration opportunities?</h4>
-                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes! We actively collaborate with academic institutions, pharmaceutical companies, and research organizations. Please use the contact form above selecting "Research Collaboration" and our research team will reach out to discuss potential partnerships.</p>
-                </div>
+                <div class="facility-box animate-on-scroll delay-100">
+                    <div class="facility-icon"><i class="fas fa-robot"></i></div>
+                <a href="404.html">   <div class="facility-content">
+                        <h4>Robotic Automation</h4>
+                        <p>Automated pipetting and sorting systems for high throughput.</p>
+                    </div>
+                </div></a> 
+                <div class="facility-box animate-on-scroll delay-200">
+                    <div class="facility-icon"><i class="fas fa-database"></i></div>
+                  <a href="404.html">  <div class="facility-content">
+                        <h4>Secure Data Center</h4>
+                        <p>HIPAA compliant cloud infrastructure for research data.</p>
+                    </div>
+                </div></a>
             </div>
         </div>
     </section>
@@ -1040,14 +1137,14 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content animate-on-scroll">
-            <h2>Ready to Get Started?</h2>
-            <p>Experience world-class diagnostic services with cutting-edge technology and expert care.</p>
-            <a href="404.html" class="btn-white">Book an Appointment <i class="fas fa-arrow-right"></i></a>
+            <h2>Join Our Research Network</h2>
+            <p>Collaborate with leading scientists and institutions. Partner with us to drive innovation in healthcare.</p>
+            <a href="404.html" class="btn-white">Become a Partner <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+ <footer>
         <div class="footer-grid">
             <div class="footer-brand animate-on-scroll">
                 <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px;">
@@ -1064,18 +1161,17 @@
                 </div>
             </div>
 
-          
-         <div class="footer-column animate-on-scroll delay-100">
+            <div class="footer-column animate-on-scroll delay-100">
                 <h4>Quick Links</h4>
                 <ul>
-
-                    <li><a href="index.html">Home</a></li>   
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="research.html">Research</a></li>
                     <li><a href="biosafe.html">Biosafety</a></li>
-                    <li><a href="blog.html">Blog</a></li>
+                     <li><a href="blog.html">Blog</a></li> 
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
+
             <div class="footer-column animate-on-scroll delay-200">
                 <h4>Services</h4>
                 <ul>
@@ -1129,6 +1225,8 @@
             });
         });
 
+        
+
         // Scroll Animations
         const observerOptions = {
             threshold: 0.1,
@@ -1147,44 +1245,34 @@
             observer.observe(el);
         });
 
-        // FAQ Toggle
-        function toggleFaq(element) {
-            const faqItem = element.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
+        // Publication Filtering
+        function filterPubs(filter) {
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
 
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        }
-
-        // Form Submit Handler
-        function handleSubmit(e) {
-            e.preventDefault();
-            
-            // Simulate form submission
-            const btn = e.target.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                btn.style.background = 'var(--success)';
+            // Filter items
+            const items = document.querySelectorAll('.pub-item');
+            items.forEach(item => {
+                const year = item.getAttribute('data-year');
+                const cat = item.getAttribute('data-cat');
                 
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                    e.target.reset();
-                }, 2000);
-            }, 1500);
+                if (filter === 'all' || year === filter || cat === filter) {
+                    item.style.display = 'flex';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
         }
     </script>
 </body>

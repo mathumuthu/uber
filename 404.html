@@ -5,60 +5,315 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>404 - Page Not Found</title>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-body{
-    background: linear-gradient(135deg,#1e293b,#0f172a);
+/* MAIN WRAPPER */
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
 }
+
+.error-wrapper {
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+}
+
+/* LOGO */
+.error-logo {
+    width: 220px;
+    margin-bottom: 15px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.error-img {
+    width: 260px;
+    position: absolute;          /* prevents layout shift */
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: floatImg 4s ease-in-out infinite;
+}
+
+
+@keyframes floatImg {
+    0%   { transform: translateX(0px); }
+    50%  { transform: translateX(25px); }
+    100% { transform: translateX(0px); }
+}
+
+/* TEXT */
+.error-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 25px;
+}
+
+.error-sub {
+    font-size: 15px;
+    color: #ccc;
+    margin-bottom: 25px;
+}
+
+/* SEARCH BOX */
+.search-box {
+    background: #1a1a1a;
+    width: 340px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
+}
+
+.search-box i {
+    color: #e53935;
+}
+
+/* BUTTON */
+.home-btn {
+    background: #e53935;
+    padding: 12px 30px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.home-btn:hover {
+    background: #e1ad55fb;
+}
+
+/* ============================================
+   📱 MOBILE RESPONSIVE (MAX-WIDTH: 768PX)
+============================================ */
+@media (max-width: 768px) {
+
+    body {
+        overflow: auto;
+    }
+
+    .error-wrapper {
+        height: auto;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    /* LOGO */
+    .error-logo {
+        width: 160px;
+        margin-bottom: 20px;
+    }
+
+    /* 404 IMAGE */
+    .error-img {
+        width: 200px;
+    }
+
+    /* TEXT */
+    .error-title {
+        font-size: 26px;
+        margin-top: 20px;
+    }
+
+    .error-sub {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* SEARCH */
+    .search-box {
+        width: 280px;
+        padding: 10px 15px;
+    }
+
+    .search-box input {
+        font-size: 14px;
+    }
+
+    /* BUTTON */
+    .home-btn {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .error-logo {
+        width: 130px;
+    }
+
+    .error-img {
+        width: 170px;
+    }
+
+    .error-title {
+        font-size: 22px;
+    }
+
+    .search-box {
+        width: 240px;
+    }
+}
+
+.img-box {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html, body {
+    overflow-x: hidden !important;
+}
+
+.img-box {
+    overflow: hidden;
+}
+
+/* FIX overflow on mobile animation */
+@media (max-width: 768px) {
+    @keyframes floatImg {
+        0%   { transform: translateX(0px); }
+        50%  { transform: translateX(8px); }
+        100% { transform: translateX(0px); }
+    }
+
+    .error-img {
+        max-width: 180px;
+    }
+}
+
+
+/* BUTTON GROUP */
+.btn-group{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+/* BACK BUTTON */
+.back-btn{
+    background:#222;
+    color:#fff;
+    border:none;
+    padding:12px 30px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#444;
+}
+
+/* HOME BUTTON */
+.home-btn{
+    background:#e53935;
+    padding:12px 30px;
+    border-radius:8px;
+    color:#fff;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.home-btn:hover{
+    background:#e1ad55fb;
+}
+
+
+
+
+
+
+
+
+
+
+
 </style>
 
+<!-- ICONS (OPTIONAL) -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
 </head>
+<body>
 
-<body class="min-h-screen flex items-center justify-center text-white px-6">
+<div class="error-wrapper">
 
-<div class="text-center max-w-xl">
-
-<!-- 404 Number -->
-<h1 class="text-8xl md:text-9xl font-extrabold text-blue-500 animate-pulse">
-404
-</h1>
-
-<!-- Title -->
-<h2 class="text-2xl md:text-3xl font-semibold mt-4">
-Page Not Found
-</h2>
-
-<!-- Description -->
-<p class="text-gray-300 mt-3">
-Sorry, the page you are looking for doesn't exist or has been moved.
-</p>
-
-<!-- Buttons -->
-<div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-
-<a href="index.html"
-class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition">
-🏠 Back to Home
+    <!-- LOGO -->
+    <a href="index.html">
+    <img src="logo.webp" class="error-logo" alt="Logo">
 </a>
 
-<!-- <a href="contact.html"
-class="px-6 py-3 border border-white hover:bg-white hover:text-black rounded-lg transition">
-Next Page
-</a> -->
 
+    <div class="img-box">
+   <img src="404.webp" class="error-img" alt="404 Image">
 </div>
 
-<!-- Illustration -->
-<div class="mt-10">
-<img 
-src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png"
-class="w-48 mx-auto opacity-80 animate-bounce"
-alt="404 Illustration">
+
+    <!-- TITLE -->
+    <h2 class="error-title">Oops! Page not Found</h2>
+    <p class="error-sub">The page you are looking for does not exist.</p>
+
+    <!-- BUTTON -->
+    <!-- <a href="index.html" class="home-btn">Back to Home</a> -->
+    <div class="btn-group">
+    <button onclick="history.back()" class="back-btn">
+        ← Go Back
+    </button>
+
+    <a href="index.html" class="home-btn">
+        🏠 Go Home
+    </a>
 </div>
 
 </div>
+<!-- BUTTONS -->
+<!-- <div class="btn-group">
+    <button onclick="history.back()" class="back-btn">
+        ← Go Back
+    </button>
 
+    <a href="index.html" class="home-btn">
+        🏠 Go Home
+    </a>
+</div> -->
 </body>
 </html>
