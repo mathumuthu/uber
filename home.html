@@ -246,12 +246,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
             border: 1px solid var(--gray-100);
+            z-index: 1001;
+            pointer-events: none;
         }
 
         .home-dropdown.active .home-menu {
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
+            pointer-events: auto;
         }
 
         .home-menu-item {
@@ -362,12 +365,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
             border: 1px solid var(--gray-100);
+            z-index: 1001;
+            pointer-events: none;
         }
 
         .dropdown.active .dropdown-menu {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
         }
 
         .dropdown-item {
@@ -1706,6 +1712,7 @@ transform:translateY(-3px);
 
 
     </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Progress Bar -->
@@ -1722,7 +1729,7 @@ transform:translateY(-3px);
             <ul class="nav-links">
                 <!-- Home Dropdown -->
                 <li class="nav-item home-dropdown" id="homeDropdown">
-                    <button class="home-btn-dropdown">
+                    <button type="button" class="home-btn-dropdown">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
@@ -2119,7 +2126,7 @@ transform:translateY(-3px);
                 </div>
                 <p class="testimonial-text">"RideGo has completely changed my daily commute. The drivers are professional, cars are clean, and I love the transparent pricing. Never going back to traditional taxis!"</p>
                 <div class="testimonial-author">
-                    <img src="small5.webp" class="author-avatar" alt="Sarah">
+                    <img src="homeimg4.webp" class="author-avatar" alt="Sarah">
                     <div class="author-info">
                         <h4>Sarah Johnson</h4>
                         <p>Marketing Executive • NYC</p>
@@ -2137,7 +2144,7 @@ transform:translateY(-3px);
                 </div>
                 <p class="testimonial-text">"As a driver, RideGo gives me the flexibility to earn on my own schedule. The app is intuitive, payouts are fast, and the support team is always helpful."</p>
                 <div class="testimonial-author">
-                    <img src="small6 (1).webp" class="author-avatar" alt="Michael">
+                    <img src="homeimg2.webp" class="author-avatar" alt="Michael">
                     <div class="author-info">
                         <h4>Michael Chen</h4>
                         <p>Driver Partner • San Francisco</p>
@@ -2155,7 +2162,7 @@ transform:translateY(-3px);
                 </div>
                 <p class="testimonial-text">"The food delivery service is fantastic! Hot meals delivered in under 30 minutes. The real-time tracking gives me peace of mind knowing exactly when my food will arrive."</p>
                 <div class="testimonial-author">
-                    <img src="small4.webp" class="author-avatar" alt="Emma">
+                    <img src="homeimg1.webp" class="author-avatar" alt="Emma">
                     <div class="author-info">
                         <h4>Emma Williams</h4>
                         <p>Food Blogger • Chicago</p>
@@ -2323,9 +2330,11 @@ transform:translateY(-3px);
         });
 
         // Close all dropdowns when clicking outside
-        document.addEventListener('click', () => {
-            dropdowns.forEach(d => d.classList.remove('active'));
-            homeDropdown.classList.remove('active');
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.home-dropdown') && !e.target.closest('.dropdown')) {
+                dropdowns.forEach(d => d.classList.remove('active'));
+                homeDropdown.classList.remove('active');
+            }
         });
 
         // Mobile menu toggle
