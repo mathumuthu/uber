@@ -12,6 +12,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        
 
     
     <!-- Lucide Icons -->
@@ -500,7 +501,7 @@ height:calc(100vh - 64px);
 
                 <!-- Desktop CTA -->
                 <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
-                                      <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Contact</button></a>
+                                      <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Location</button></a>
 
                  <a href="login.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>
                     <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
@@ -588,7 +589,7 @@ height:calc(100vh - 64px);
                   <div class="pt-6 space-y-4">
                     <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
                         <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
-                        Contact
+                        Location
                     </a>
                 </div>
                 <div class="pt-6 space-y-4">
@@ -962,14 +963,14 @@ height:calc(100vh - 64px);
                         <h3 class="font-bold text-gray-900 text-xl mb-1">Aravind Sanka</h3>
                         <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder & CEO</p>
                         <p class="text-gray-600 text-sm mb-4">IIT Bhubaneswar (Mechanical Engineering). Former Flipkart supply chain finance lead. First batch of IIT Bhubaneswar, ex-Tata Motors intern.</p>
-                        <div class="flex gap-3">
+                        <!-- <div class="flex gap-3">
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
                             </a>
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 
@@ -984,14 +985,14 @@ height:calc(100vh - 64px);
                         <h3 class="font-bold text-gray-900 text-xl mb-1">Pavan Guntupalli</h3>
                         <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder</p>
                         <p class="text-gray-600 text-sm mb-4">IIT Kharagpur (Electronics & Communication). Former Samsung Research software developer. Also holds MBA from IIM Bangalore.</p>
-                        <div class="flex gap-3">
+                        <!-- <div class="flex gap-3">
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
                             </a>
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 
@@ -1006,14 +1007,14 @@ height:calc(100vh - 64px);
                         <h3 class="font-bold text-gray-900 text-xl mb-1">SR Rishikesh</h3>
                         <p class="text-[#FCC21B] font-semibold text-sm mb-3">Co-founder</p>
                         <p class="text-gray-600 text-sm mb-4">PES University (Computer & Information Sciences). Founder of IMPStant and TheKarrier. Winner of 'Best Project of the Year' award.</p>
-                        <div class="flex gap-3">
+                        <!-- <div class="flex gap-3">
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="linkedin" class="w-4 h-4 text-gray-600"></i>
                             </a>
                             <a href="404.html" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-[#FCC21B] transition-colors">
                                 <i data-lucide="twitter" class="w-4 h-4 text-gray-600"></i>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -1351,21 +1352,21 @@ Travel
 </div>
 
 <div class="flex items-center gap-6 justify-center">
-<button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+ <a href="404.html"><button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
 
 <i data-lucide="globe" class="w-5 h-5"></i>
 
 English
 
-</button>
+</button></a>
 
-<button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+<a href="404.html"><button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
 
 <i data-lucide="map-pin" class="w-5 h-5"></i>
 
 India
 
-</button>
+</button></a>
 
 </div>
 
@@ -1492,6 +1493,9 @@ India
                 }
             });
         });
-    </script>
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+});
+</script>
 </body>
 </html>
