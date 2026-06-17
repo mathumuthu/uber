@@ -264,6 +264,20 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
 
+@media (min-width: 1024px) {
+    nav .flex.items-center.justify-between {
+        position: relative;
+    }
+
+    nav .hidden.lg\:flex.items-center.space-x-1,
+    nav .hidden.lg\:flex.items-center.justify-center.flex-1.space-x-1 {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
 
     </style>
 </head>
@@ -272,8 +286,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
     <!-- Navigation Header -->
     <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
-                <!-- Logo -->
+<div class="flex items-center justify-between h-16 lg:h-20">                <!-- Logo -->
                 <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
                     <a href="index.html" class="flex items-center gap-2 group">
                         <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -305,56 +318,28 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         </div>
                     </div>
 
-                    <a href="service.html" class="nav-link text-[#FCC21B] font-bold px-4 py-2">Services</a>
-                    
-                    <!-- About Dropdown -->
-                    <div class="relative group px-2">
-                     <a href="About.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
-                            About Us
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        </button></a>
-                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Piricing</span>
-                            </a>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Careers</span>
-                            </a>
-                        </div> -->
-                    </div>
-                    
-                    <!-- Safety Dropdown -->
-                    <div class="relative group px-2">
-                     <a href="safety.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
-                            Safety
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        </button></a>
-                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Safety Features</span>
-                            </a>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Insurance</span>
-                            </a>
-                        </div> -->
-                    </div>
-                </div>
+<div class="hidden lg:flex justify-center items-center space-x-2">
+<a href="service.html" class="nav-link px-4 py-2">Services</a>
 
+<a href="About.html" class="nav-link px-4 py-2">About Us</a>
+
+<a href="safety.html" class="nav-link px-4 py-2">Safety</a>
+
+<a href="contact.html" class="nav-link px-4 py-2">Contact</a>
+
+</div>
                 <!-- Desktop CTA -->
-                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
-                 <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Location</button></a>
+<div class="hidden lg:flex items-center gap-4 ml-auto">
+    <a href="login.html">
+        <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">
+            Login
+        </button>
+    </a>
 
-                  <a href="login.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>
-                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
-                        Dasbhoard
-                    </a>
-                </div>
+    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold">
+        Dashboard
+    </a>
+</div>
 
                 <!-- Mobile Menu Button -->
                 <div class="lg:hidden flex items-center gap-3">
@@ -433,12 +418,6 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                 </div>
                 
 
-<div class="pt-6 space-y-4">
-                    <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
-                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
-                        Location
-                    </a>
-                </div>
 
 
 
@@ -513,7 +492,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
                 <!-- Bike -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="0">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                <a href="404.html">  <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="bike" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Bike</h3>
@@ -522,11 +501,11 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         <span>Starting at ₹15</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                </div>
+                </div></a>
                 
                 <!-- Auto -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                 <a href="404.html">   <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="car" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Auto</h3>
@@ -535,11 +514,11 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         <span>Starting at ₹30</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                </div>
+                </div></a>
                 
                 <!-- Auto Share -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                 <a href="404.html">   <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="users" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Auto Share</h3>
@@ -548,11 +527,11 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         <span>Save up to 50%</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                </div>
+                </div></a>
                 
                 <!-- Parcel -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                 <a href="404.html"></a>   <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="package" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Parcel</h3>
@@ -561,7 +540,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         <span>Starting at ₹25</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                </div>
+                </div></a>
                 
                 <!-- Cab Economy -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="400">
@@ -578,6 +557,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                 
                 <!-- Cab Premium -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="500">
+                    <a href="404.html">
                     <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="sparkles" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
@@ -586,12 +566,12 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                     <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
                         <span>Premium Experience</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
+                    </div></a>
                 </div>
                 
                 <!-- Metro Ticket -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="600">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+               <a href="404.html">    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="train-front" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Metro Ticket</h3>
@@ -600,11 +580,11 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                         <span>Zero Booking Fee</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                </div>
+                </div></a> 
                 
                 <!-- Travel -->
                 <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="700">
-                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+            <a href="404.html">       <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="palmtree" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-xl mb-2">Travel</h3>
@@ -615,7 +595,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                     </div>
                 </div>
             </div>
-        </div>
+        </div></a> 
     </section>
 
     <!-- How It Works -->
@@ -834,9 +814,9 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                             Solo ride
                         </li>
                     </ul>
-                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                <a href="404.html">  <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
                         Book Now
-                    </button>
+                    </button></a>  
                 </div>
                 
                 <div class="pricing-card bg-white rounded-2xl p-6 border-2 border-[#FCC21B] text-center relative" data-aos="fade-up" data-aos-delay="100">
@@ -863,9 +843,9 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                             Weather protection
                         </li>
                     </ul>
-                    <button class="w-full py-3 bg-[#FCC21B] text-black rounded-xl font-bold hover:bg-[#e5b100] transition-colors">
+                  <a href="404.html">  <button class="w-full py-3 bg-[#FCC21B] text-black rounded-xl font-bold hover:bg-[#e5b100] transition-colors">
                         Book Now
-                    </button>
+                    </button></a>
                 </div>
                 
                 <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="200">
@@ -889,9 +869,9 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                             Trunk space
                         </li>
                     </ul>
-                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                    <a href="404.html">  <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
                         Book Now
-                    </button>
+                    </button></a>
                 </div>
                 
                 <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="300">
@@ -915,9 +895,9 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
                             Premium experience
                         </li>
                     </ul>
-                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                    <a href="404.html">  <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
                         Book Now
-                    </button>
+                    </button></a>
                 </div>
             </div>
         </div>

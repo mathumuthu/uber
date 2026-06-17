@@ -435,7 +435,18 @@ height:calc(100vh - 64px);
 
 
 
+@media (min-width: 1024px) {
+    nav .flex.items-center.justify-between {
+        position: relative;
+    }
 
+    nav .hidden.lg\:flex.items-center.space-x-1,
+    nav .hidden.lg\:flex.items-center.justify-center.flex-1.space-x-1 {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
 
 
 
@@ -482,57 +493,29 @@ height:calc(100vh - 64px);
                         </div>
                     </div>
 
-                    <a href="service.html" class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors px-4 py-2">Services</a>
-                    
-                    <!-- About Dropdown -->
-                    <div class="relative group px-2">
-                    <a href="About.html">  <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
-                            About Us
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        </button></a>  
-                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>About Us</span>
-                            </a>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Careers</span>
-                            </a>
-                        </div> -->
-                    </div>
-                    
-                    <!-- Safety Dropdown -->
-                    <div class="relative group px-2">
-                      <a href="safety.html">  <button class="nav-link text-[#FCC21B] font-bold flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
-                            Safety
-                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
-                        </button></a>
-                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors bg-[#FCC21B]/5">
-                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Safety Features</span>
-                            </a>
-                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
-                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
-                                <span>Insurance</span>
-                            </a>
-                        </div> -->
-                    </div>
-                </div>
+                   
+<div class="hidden lg:flex justify-center items-center space-x-2">
+<a href="service.html" class="nav-link px-4 py-2">Services</a>
 
+<a href="About.html" class="nav-link px-4 py-2">About Us</a>
+
+<a href="safety.html" class="nav-link px-4 py-2">Safety</a>
+
+<a href="contact.html" class="nav-link px-4 py-2">Contact</a>
+
+</div>
                 <!-- Desktop CTA -->
-                  
-                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
-                                    <a href="contact.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Location</button></a> 
+<div class="hidden lg:flex items-center gap-4 ml-auto">
+    <a href="login.html">
+        <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">
+            Login
+        </button>
+    </a>
 
-                <a href="login.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a> 
-                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
-                       Dashboard
-                    </a>
-                </div>
+    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold">
+        Dashboard
+    </a>
+</div>
 
                 <!-- Mobile Menu Button -->
                 <div class="lg:hidden flex items-center gap-3">

@@ -406,10 +406,21 @@ nav{
                         </button></a>
                         
                     </div>
+
+ <div class="relative group px-2">
+                        <a href="contact.html"><button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('contact-dropdown')">
+                            Contact
+                        </button></a>
+                        
+                    </div>
+
+
+
+
+
                 </div>
                 <!-- Desktop CTA -->
                 <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
-                 <a href="contact.html"><button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Location    
 
                 <a href="login.html"><button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>    
                   <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
@@ -521,7 +532,7 @@ class="pt-24 relative min-h-[90vh] flex items-center justify-center hero-bg">   
                     India's largest bike taxi service. Quick rides, affordable fares, and the most reliable way to beat traffic.
                 </p>
                 
-                <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <!-- <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                     <div class="relative group mb-4" data-aos="slide-right" data-aos-delay="400">
                         <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#FCC21B] z-10">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -539,14 +550,23 @@ class="pt-24 relative min-h-[90vh] flex items-center justify-center hero-bg">   
                         <button class="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-gray-100 rounded-full hover:bg-[#FCC21B] transition-colors group/btn">
                             <i data-lucide="arrow-up-down" class="w-5 h-5 text-gray-600 group-hover/btn:text-black"></i>
                         </button>
-                    </div>
+                    </div> -->
                     
-                    <button class="btn-primary w-full bg-[#FCC21B] text-black font-bold text-xl py-4 rounded-xl pulse-glow shimmer-effect flex items-center justify-center gap-3 group" data-aos="zoom-in" data-aos-delay="600">
-<a href="404.html" class="btn-primary w-full bg-[#FCC21B] text-black font-bold text-xl py-4 rounded-xl pulse-glow shimmer-effect flex items-center justify-center gap-3">
-Book Ride
-</a>                        <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
-                </div>
+                <!-- Pickup -->
+<input type="text" id="pickup"
+placeholder="Enter Pickup Location"
+class="w-full pl-14 pr-4 py-4 rounded-xl bg-white/90">
+
+<!-- Drop -->
+<input type="text" id="drop"
+placeholder="Enter Drop Location"
+class="w-full pl-14 pr-4 py-4 rounded-xl bg-white/90">
+
+<!-- Book Ride Button -->
+<button onclick="bookRide()"
+class="btn-primary w-full bg-[#FCC21B] text-black font-bold text-xl py-4 rounded-xl">
+    Book Ride
+</button>
                 
                 <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="700">
                     <div class="text-center">
@@ -1323,6 +1343,37 @@ India
             
             lastScroll = currentScroll;
         });
+
+
+
+
+
+
+
+function bookRide() {
+    let pickup = document.getElementById("pickup").value.trim();
+    let drop = document.getElementById("drop").value.trim();
+
+    if (pickup === "" || drop === "") {
+        alert("⚠️ Please fill Pickup and Drop Location.");
+        return;
+    }
+
+    alert("✅ Ride Booked Successfully!");
+
+    // Success page
+    window.location.href = "dashboard.html";
+}
+
+
+
+
+
+
+
+
+
+
     </script>
 </body>
 </html>
